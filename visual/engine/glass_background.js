@@ -33,14 +33,17 @@
    const scale=Math.min(designScale,2*Math.min(cx,this.canvas.width-cx)/width,2*Math.min(cy,this.canvas.height-cy)/height);
    return{x:cx-width*scale/2,y:cy-height*scale/2,width:width*scale,height:height*scale,center:[cx,cy],scale,blend};
   }
-  update(time,profile,dynamics){
+  update(time,profile,dynamics,frameInterval=1/30){
    if(profile==='legacy')return;
    const changed=profile!==this.profile||time<this.lastTime;
    const appearance=dynamics.appearance;
    const command=dynamics.id!==this.dynamicsId||dynamics.generation!==this.dynamicsGeneration||appearance.generation!==this.appearanceGeneration;
    if(changed){this.profile=profile;this.lastTime=-Infinity;}
    if(command)this.lastTime=-Infinity;
-   if(!changed&&time-this.lastTime<1/30-.00025)return;
+   // Live display keeps its bounded 30 Hz background. Offline export explicitly
+   // supplies zero to render every simulated frame without changing live pacing.
+   const interval=Number.isFinite(frameInterval)?Math.max(0,Math.min(.1,frameInterval)):1/30;
+   if(!changed&&time-this.lastTime<interval-.00025)return;
    this.timeline=dynamics.archive;
    const state=dynamics.view(),o={archive:state.archive,glow:1,bloom:1,material:1,dynamicLight:1,cleanSurface:1,glassAppearance:appearance,interactionGain:state.interactionGain};
    this.lastStats=this.painter.render(B.geometry.layout(state.geometryTime,o),{...o,lightTime:state.lightTime,framebuffer:this.framebuffer});

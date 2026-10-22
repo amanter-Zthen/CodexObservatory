@@ -13,21 +13,21 @@
     "background/engine/roll.js": "1b09b9ccda1c04b1a0db0a395f616b06dbce3ba5645d5d8c69eeb7b46a46a70d",
     "background/engine/switch_field.js": "c8c6f44875b2c13bc1b4c4ab96dcd722d9e24016f6840fa9bb258dd5c76023b8",
     "background/views.js": "0a597d32b19d67d1e96f4ba00d6ea5514e7e433369599ed4a73995059ca3c38c",
-    "engine/animator.js": "d505a6273df05fbd4f61d52efbefafd7b25e895e00fbde569be5157e38a8cff0",
-    "engine/app.js": "4734c7702467808fb364859fed177e7d8dca6c8a3d12c3fc6ae7714f612578ba",
+    "engine/animator.js": "dcd17037ca3f976d65fadcecf3b0c1c65264402f9e84f006396f17f42b16f27f",
+    "engine/app.js": "fec55818b57885e9b929293b42b0cf4bfd386d19110cae4169945bb900e6ee2f",
     "engine/atlas.js": "14d1b52c8660025f6e22040bd1d42f3509034db0a3cbb2fffc7861c6d1364599",
     "engine/core.js": "cb14165a3ef5120ac2d7add3dcf22a412f93d27b57c90f8a67320534fe595be2",
     "engine/fallback.js": "df474e0f8613d2042bfc9c31de97ccce9f71963aa9d7dbda226a51f1c04466bc",
     "engine/flow.js": "894a9e5230a8123f73066020c1464ec990d9fff4228631b2ef9954f20614ad1b",
     "engine/gl.js": "43d677b76f7ea7aca4a79fc041d8ddf5f1033657a221f3b0ad31839b56c3d49f",
-    "engine/glass_background.js": "4ae61eb93fbaac561024fd37f66b70776a302b166074d635b26b0a5456cb7678",
+    "engine/glass_background.js": "f573c879d1a413807dd1d7aff1b434a8ce3798199c9fe7c3e356e7cbb795731a",
     "engine/hud_motion.js": "5c75074c88afaa80547ddb5d4902d502db057e33fedc2d261b445c06edfe4752",
     "engine/labels.js": "f306cf2df3c9e84f91a1f3074ccbccd23561d4e44ede3c55ce01a5e3522daf60",
     "engine/layers.js": "41c4dbf3450db5095af1fa9cdaced4748e4b67e72fb65d967af865125de19daa",
     "engine/particles.js": "99859d13ed455c10f3817ece3ec76128b02e2177eb0414aac56c867526f52b60",
     "engine/presentation.js": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605",
     "engine/quota_motion.js": "2ef81c507f35b586fa2fc77c46afd668c9e6b2fb0ceb2dfa6e6508eff9c9deea",
-    "engine/renderer.js": "926c07cdaf08b10194cd4bf832fb9e634058efa082a2452b05ee30a2411031af",
+    "engine/renderer.js": "c5bc00143977154bb48807b75bcc320b8ee29d2be8db07173e2500e1ee28b867",
     "engine/ribbons.js": "9680b9cb67cfa36c4b64d09c3f18a46112c8741c262704ff350084c6517d4359",
     "engine/ribbon_art.js": "5440fc21bd206dbe8ed3cbe210ffb78cf4f6e230ad7981fc51be028f6badcabd",
     "engine/row_presentation.js": "bfc803d55c42dd53691edd0d5f5552c77ce0d50e26466be6ffa34c40f901ce3c",
@@ -40,7 +40,7 @@
     "engine/snapshot_feed.js": "4a39711a94cf49b57188dd5bbfe9969dc9b429aee9fd95a61ae521b5df4b0cc7",
     "engine/stage.js": "040899cfa53ad4e8578e8f26b3e1a62c53acf46768d682cf6cc6049b38bbd6b3",
     "engine/status_palette.js": "4562ce951680f7086fe1a2192e35848184e06b8934eb55858041aa4d656c6472",
-    "engine/synthetic.js": "31ab24b842abf80d96c87de61a911749c937f76cd02978a18823cee98a329070"
+    "engine/synthetic.js": "ab100ab18af5f827d0aaed3575dec0122f43b34e6ae7a727218512c3d46f9ed6"
   },
   "layers": [
     {
@@ -129,22 +129,17 @@
   "engineeringRevision": "0.4.9-engineering.1",
   "shellRevision": "0.4.9-shell.1",
   "lastVisualAdjustment": {
-    "at": "2026-10-23T03:06:50.497105+08:00",
-    "description": "128 DIP render space with 120 DIP smooth tail; rich moving and shimmering text light; 0.4.8 rate tween and per-frame digits; automatic camera and bounded preparation",
+    "at": "2026-10-22T20:28:39.879Z",
+    "description": "Shared snapshot-to-glass states, Astra synthetic model, and assembled-preview frame-by-frame offline capture; real-time background remains 30 Hz",
     "files": [
       "engine/animator.js",
       "engine/app.js",
-      "engine/glass_background.js",
-      "engine/labels.js",
-      "engine/presentation.js",
       "engine/renderer.js",
-      "engine/shaders/post.js",
-      "engine/shaders/scene_layers.js",
-      "engine/shaders/scene_rib.js",
-      "engine/shaders/text.js",
-      "engine/row_presentation.js"
+      "engine/glass_background.js",
+      "engine/synthetic.js"
     ],
     "versionStrategy": "Overwrite the current fixed 0.4.9 six-layer project"
   },
-  "previewHtmlSha256": "1fc219c53b27ee5c2f2e4bf4b21919aaf4245fce78a027c56df42099da4e955a"
+  "previewHtmlSha256": "1fc219c53b27ee5c2f2e4bf4b21919aaf4245fce78a027c56df42099da4e955a",
+  "publicRelease": "v0.4.9-r1"
 }

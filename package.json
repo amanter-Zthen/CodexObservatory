@@ -11,7 +11,8 @@
     "test:stress": "node tests/verify-runtime-stress.cjs",
     "build:backend": "node deployment/build-overlay.cjs",
     "package": "node tools/package-release.cjs",
-    "render:demo": "node tools/render-public-demo.cjs"
+    "render:demo": "node tools/render-public-demo.cjs",
+    "test:glass": "node tests/verify-glass-state-driver.cjs"
   },
   "engines": {
     "node": ">=20"

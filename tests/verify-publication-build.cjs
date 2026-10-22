@@ -88,7 +88,7 @@ try {
     assert.throws(() => release.verifyVisual(root), /script list/);
     write('visual/index.html', html); json('layers.lock.json', visualLock);
   });
-  for (const file of ['desktop/host.cpp', 'desktop/composition_host.h', 'desktop/legacy_menu.h', 'desktop/vendor/json.hpp']) write(file, '// synthetic source fixture\n');
+  for (const file of ['desktop/host.cpp', 'desktop/composition_host.h', 'desktop/input_region.h', 'desktop/legacy_menu.h', 'desktop/vendor/json.hpp']) write(file, '// synthetic source fixture\n');
   for (const file of ['json-LICENSE.MIT', 'WebView2-LICENSE.txt', 'WebView2-NOTICE.txt']) write('desktop/vendor/' + file, 'Synthetic license fixture.\n');
   for (const file of ['LICENSE.RhineLabUI.txt', 'SOURCES.txt', 'ARCHIVE_REFERENCE.txt']) write('visual/references/' + file, 'Synthetic source fixture.\n');
   for (const file of ['LICENSE', 'ACKNOWLEDGMENTS.md', 'THIRD_PARTY_NOTICES.md', 'README.md', 'README.en.md', 'docs/图层定稿.md', 'docs/玻璃参数.md']) write(file, 'SCRIPT CONTRACT TEST FIXTURE ONLY\n');

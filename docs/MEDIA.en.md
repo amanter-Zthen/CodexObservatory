@@ -1,16 +1,30 @@
-# Demo production and upload
+# 0.4.9-r1 demo production and upload
 
 [中文](MEDIA.zh-CN.md) · [Home](../README.en.md)
 
-The released demo is rendered offline, frame by frame, by the current six-layer WebGL code with synthetic state. It records no real conversations or credentials. The sequence covers empty entry, model start, 1 → 2 → 4 models, folding back to standby, and full-window dissolution. The final frame was confirmed hidden.
+The released demo renders the actual assembled page offline, frame by frame. Synthetic snapshots pass through `SnapshotFeed → app.step → Animator → six-layer WebGL`, with no real conversations or credentials recorded. Offline glass updates every frame, covering idle, green, yellow, and red states, and the final frame is hidden. The demo uses `gpt-6-astra`, replacing the previous mini example.
 
 | Deliverable | Specification | File size | Location |
 | --- | --- | --- | --- |
-| Full video | 3840 × 2160, 60 fps, 36 seconds, 2160 frames; H.264 + AAC stereo | 19,046,727 bytes, about 18.2 MiB | [Release MP4](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9/CodexObservatory-0.4.9-4K60.mp4) |
-| README GIF | 800 × 450, 8 fps, complete 36 seconds; silent | 6,380,321 bytes, about 6.1 MiB | [preview.gif](../media/preview.gif) |
+| Full video | 3840 × 2160, 60 fps, 37 seconds, 2220 frames; H.264 + AAC stereo | 20,733,919 bytes, about 19.8 MiB | [Release MP4](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4) |
+| README GIF | 800 × 450, nominally 8 fps, 296 frames, 37.01 seconds; silent | 6,706,297 bytes, about 6.4 MiB | [preview.gif](../media/preview.gif) |
 | Poster and six isolated layers | Actually drawn by the current code | See repository files | [media](../media/) |
 
-The soundtrack is a 36-second excerpt of **DJ烬冷冷、情冷冷 — Claude Remotion（浴室氛围版）**, supplied by the project author, with fades. The FLAC decoded successfully, and both streams of the final MP4 passed complete decode checks. The source repository excludes the original FLAC and album cover; see [acknowledgments](../ACKNOWLEDGMENTS.md) for music credits and license scope.
+The soundtrack is a 37-second excerpt of **DJ烬冷冷、情冷冷 — Claude Remotion（浴室氛围版）**, supplied by the project author, with fades. Both streams of the final MP4 passed complete decode checks. The source repository excludes the original FLAC and album cover; see [acknowledgments](../ACKNOWLEDGMENTS.md) for music credits and license scope.
+
+## Timeline and state
+
+| Time | Scene |
+| --- | --- |
+| 0–6 seconds | Idle; entry begins at 0.5 seconds, showing the empty archive and glass first. |
+| 6–12 seconds | One green model row, with output and moving numbers. |
+| 12–18 seconds | Two model rows, including yellow pending verification. |
+| 18–25 seconds | Four model rows, including a red anomaly and `gpt-6-astra`. |
+| 25–28 seconds | Four rows enter a new turn, all green; the old turn's anomaly is not erased. |
+| 28–32 seconds | Return to idle and fold the information. |
+| 32–37 seconds | Full dissolution, ending hidden. |
+
+State colors affect pane status markers, ink colors, and the corresponding archive. The main glass retains its warm optical material rather than tinting the entire array with the status color.
 
 ## Upload path
 

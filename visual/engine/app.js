@@ -49,12 +49,12 @@
   const PAUSE = Q.has('pause'), DPR_CAP = Q.has('dpr') ? Math.max(0.5, +Q.get('dpr') || 1) : 3;
   for (const k of ['count', 'zoom', 'quality', 'mix', 'quota', 'output', 'speed','backdrop']) if (Q.has(k) && $(k)) $(k).value = Q.get(k);
   if (Q.get('auto') === '0') $('auto').checked = false;
-  let res = 1;
+  let res = 1,capture=null;
   function sizeCanvas() {
     const z = opt.zoom, dpr = Math.min(DPR_CAP, 3 / z, window.devicePixelRatio || 1) * res;
-    const w = NS.PANEL_W + 2 * NS.MARGIN, h = 500 + 2 * NS.MARGIN;
+    const w = NS.PANEL_W + 2 * NS.MARGIN, h = (capture?capture.maxHeight:500) + 2 * NS.MARGIN;
     canvas.style.width = w * z + 'px'; canvas.style.height = h * z + 'px';
-    const width=Math.round(w*z*dpr),height=Math.round(h*z*dpr);
+    const width=Math.round(w*(capture?capture.scale:z*dpr)),height=Math.round(h*(capture?capture.scale:z*dpr));
     if(canvas.width!==width)canvas.width=width;
     if(canvas.height!==height)canvas.height=height;
     scale = canvas.width / w;
@@ -190,12 +190,10 @@
       const dt=(paced?Math.min(real,opt.quality===3?.1:1/frameRate):real)*opt.speed;
       simT+=dt;
       if(opt.auto)demo();else count=opt.count;
-      const maxHeight=desktop&&workHeightDIP!==null?Math.max(112,Math.min(500,workHeightDIP/opt.zoom-2*NS.MARGIN-2)):500;
+      const maxHeight=capture?capture.maxHeight:desktop&&workHeightDIP!==null?Math.max(112,Math.min(500,workHeightDIP/opt.zoom-2*NS.MARGIN-2)):500;
       if(dirty||simT-lastSet>.2){anim.set(snap(),offset,maxHeight);offset=anim.offset;lastSet=simT;dirty=false;}
       anim.setReducedMotion(opt.quality===3);
-      const rows=anim.snapshot.rows||[],shape=opt.glassState!=='auto'?opt.glassState:
-        !rows.length?'idle':rows.some(r=>r.color==='red')?'red':rows.some(r=>r.color==='yellow')?'yellow':'green';
-      anim.glassDynamics.requestState(shape);
+      anim.setGlassState(opt.glassState);
       if(desktop&&pendingZoom!==null&&!closeRequested&&!hideRequested&&!anim.stage.entering&&!anim.stage.exiting&&!anim.stage.hidden)anim.beginExit();
       s=anim.frame(dt,opt.quality);
       if(desktop&&pendingZoom!==null&&s.stage.hidden){
@@ -212,7 +210,7 @@
     let painted=false;
     if(draw){
       try{
-        renderer.uploadAtlas(atlas);renderer.render(s,labels,parts,{scale,quality:opt.quality,glow:opt.glow,backdrop:opt.backdrop,glassFocus:opt.glassFocus});
+        renderer.uploadAtlas(atlas);renderer.render(s,labels,parts,{scale,quality:opt.quality,glow:opt.glow,backdrop:opt.backdrop,glassFocus:opt.glassFocus,glassFrameInterval:capture?0:undefined});
       }catch(e){fallback(e);sizeCanvas();renderer.render(s,labels,parts,{scale});}
       painted=true;pendingFrame=null;presentationStats.submitted++;
     }
@@ -233,15 +231,21 @@
   }
   if (!PAUSE) raf=requestAnimationFrame(tick);
   // Inspection hook: simulate `seconds` at fixed dt, draw only the last frame.
-  const advance = (seconds, dt) => {
+  const advance = (seconds, dt, draw=true) => {
     if(!warmed)finishWarmup(); // Explicit inspection controls own their clock.
     pendingFrame=null;
     dt = dt || 1 / 60; const n = Math.max(1, Math.round(seconds / dt));
-    for (let k = 0; k < n; k++) step(dt, (last += dt), k === n - 1);
+    for (let k = 0; k < n; k++) step(dt, (last += dt), draw&&k === n - 1);
+  };
+  const configureCapture=({scale:requestedScale=3,maxHeight=500}={})=>{
+    if(!PAUSE||desktop||playing)throw Error('Offline capture requires a paused standalone preview');
+    if(!Number.isFinite(requestedScale)||requestedScale<1||requestedScale>6||!Number.isFinite(maxHeight)||maxHeight<112||maxHeight>500)throw Error('Capture bounds are invalid');
+    capture={scale:requestedScale,maxHeight};opt.automaticQuality=false;sizeCanvas();dirty=true;
+    return{width:canvas.width,height:canvas.height,glassFrameInterval:0,pipeline:'assembled-preview'};
   };
   let repaintRaf=0;
   const redraw=()=>{if(!playing)step(0,performance.now()/1000,true);};
-  NS.debug = { get anim() { return anim; }, opt, labels, parts, get renderer(){return renderer;}, atlas, feed, advance,setPlaying,redraw,presentationStats,get heldFrame(){return !!pendingFrame;},get warmStages(){return warmIndex;},get warmed(){return warmed;},get warmDuration(){return warmDuration;},get playing(){return playing;}, get simT() { return simT; },get desktopState(){return{targetZoom,pendingZoom,closeRequested,hideRequested};} };
+  NS.debug = { get anim() { return anim; }, opt, labels, parts, get renderer(){return renderer;}, atlas, feed, advance,configureCapture,setPlaying,redraw,presentationStats,get heldFrame(){return !!pendingFrame;},get warmStages(){return warmIndex;},get warmed(){return warmed;},get warmDuration(){return warmDuration;},get playing(){return playing;}, get simT() { return simT; },get desktopState(){return{targetZoom,pendingZoom,closeRequested,hideRequested};} };
   canvas.addEventListener('wheel',e=>{e.preventDefault();offset+=Math.sign(e.deltaY);dirty=true;redraw();},{passive:false});
   if(bridge&&desktop){
     bridge.addEventListener('message',event=>{

@@ -10,7 +10,7 @@ class CompositionHost {
   Microsoft::WRL::ComPtr<IDCompositionVisual> root, content;
   Microsoft::WRL::ComPtr<ICoreWebView2CompositionController> composition;
   EventRegistrationToken cursorToken{};
-  HWND window = nullptr;
+  HWND window = nullptr, inputWindow = nullptr;
   bool cursorRegistered = false, trackingMouse = false;
 public:
   bool attached = false;
@@ -18,8 +18,8 @@ public:
   BYTE backgroundAlpha = 255;
 
   HRESULT attach(HWND hwnd, ICoreWebView2CompositionController* view,
-                 ICoreWebView2Controller* controller) {
-    window = hwnd; composition = view;
+                 ICoreWebView2Controller* controller, HWND input = nullptr) {
+    window = hwnd; inputWindow = input ? input : hwnd; composition = view;
     HRESULT hr = DCompositionCreateDevice2(nullptr, IID_PPV_ARGS(&device));
     if (SUCCEEDED(hr)) hr = device->CreateTargetForHwnd(hwnd, TRUE, &target);
     if (SUCCEEDED(hr)) hr = device->CreateVisual(&root);
@@ -38,7 +38,7 @@ public:
         Microsoft::WRL::Callback<ICoreWebView2CursorChangedEventHandler>(
           [this](ICoreWebView2CompositionController*, IUnknown*) -> HRESULT {
             POINT p{}; GetCursorPos(&p);
-            if (WindowFromPoint(p) == window) setCursor();
+            if (WindowFromPoint(p) == inputWindow) setCursor();
             return S_OK;
           }).Get(), &cursorToken);
       cursorRegistered = SUCCEEDED(hr);
@@ -48,7 +48,7 @@ public:
     return hr;
   }
   void detach() {
-    if (GetCapture() == window) ReleaseCapture();
+    if (GetCapture() == window || GetCapture() == inputWindow) ReleaseCapture();
     if (composition) {
       if (cursorRegistered) composition->remove_CursorChanged(cursorToken);
       composition->put_RootVisualTarget(nullptr);
@@ -72,7 +72,7 @@ public:
     root->SetClip(D2D_RECT_F{0, 0, float(bounds.right - bounds.left), float(bounds.bottom - bounds.top)});
     device->Commit();
   }
-  bool mouse(UINT message, WPARAM wp, LPARAM lp) {
+  bool mouse(UINT message, WPARAM wp, LPARAM lp, HWND source = nullptr) {
     if (!composition || !attached) return false;
     switch (message) {
     case WM_MOUSEMOVE: case WM_MOUSELEAVE:
@@ -83,29 +83,32 @@ public:
     case WM_MOUSEWHEEL: case WM_MOUSEHWHEEL: break;
     default: return false;
     }
+    if (!source) source = window;
     POINT point{GET_X_LPARAM(lp), GET_Y_LPARAM(lp)};
     DWORD data = 0;
     auto keys = COREWEBVIEW2_MOUSE_EVENT_VIRTUAL_KEYS(GET_KEYSTATE_WPARAM(wp));
     if (message == WM_MOUSEWHEEL || message == WM_MOUSEHWHEEL) {
       ScreenToClient(window, &point);
       data = DWORD(int(GET_WHEEL_DELTA_WPARAM(wp))); ++wheelMessages;
-    } else if (message == WM_XBUTTONDOWN || message == WM_XBUTTONUP || message == WM_XBUTTONDBLCLK) {
-      data = GET_XBUTTON_WPARAM(wp);
+    } else {
+      if (source != window && message != WM_MOUSELEAVE) MapWindowPoints(source, window, &point, 1);
+      if (message == WM_XBUTTONDOWN || message == WM_XBUTTONUP || message == WM_XBUTTONDBLCLK)
+        data = GET_XBUTTON_WPARAM(wp);
     }
     if (message == WM_MOUSELEAVE) {
       point = {}; keys = COREWEBVIEW2_MOUSE_EVENT_VIRTUAL_KEYS_NONE;
       trackingMouse = false;
-    } else if (message == WM_MOUSEMOVE && !trackingMouse && IsWindowVisible(window)) {
-      TRACKMOUSEEVENT tracking{sizeof(tracking), TME_LEAVE, window, 0};
+    } else if (message == WM_MOUSEMOVE && !trackingMouse && IsWindowVisible(source)) {
+      TRACKMOUSEEVENT tracking{sizeof(tracking), TME_LEAVE, source, 0};
       trackingMouse = TrackMouseEvent(&tracking) != FALSE;
     }
     const bool down = message == WM_LBUTTONDOWN || message == WM_RBUTTONDOWN ||
       message == WM_MBUTTONDOWN || message == WM_XBUTTONDOWN;
     const bool up = message == WM_LBUTTONUP || message == WM_RBUTTONUP ||
       message == WM_MBUTTONUP || message == WM_XBUTTONUP;
-    if (down && IsWindowVisible(window)) SetCapture(window);
+    if (down && IsWindowVisible(source)) SetCapture(source);
     const HRESULT hr = composition->SendMouseInput(COREWEBVIEW2_MOUSE_EVENT_KIND(message), keys, data, point);
-    if (up && GetCapture() == window && !(LOWORD(wp) & (MK_LBUTTON | MK_RBUTTON | MK_MBUTTON | MK_XBUTTON1 | MK_XBUTTON2)))
+    if (up && GetCapture() == source && !(LOWORD(wp) & (MK_LBUTTON | MK_RBUTTON | MK_MBUTTON | MK_XBUTTON1 | MK_XBUTTON2)))
       ReleaseCapture();
     ++mouseMessages; if (FAILED(hr)) ++inputFailures;
     return true;

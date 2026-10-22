@@ -23,6 +23,7 @@
 #include <vector>
 #include "vendor/json.hpp"
 #include "composition_host.h"
+#include "input_region.h"
 
 using Json = nlohmann::json;
 using Microsoft::WRL::Callback;
@@ -229,6 +230,8 @@ Json verificationFixture(int count = 3) {
   return s;
 }
 
+LRESULT CALLBACK panelInputProcedure(HWND, UINT, WPARAM, LPARAM);
+
 class Host {
 public:
   Options opt;
@@ -238,6 +241,7 @@ public:
   ComPtr<ICoreWebView2Controller> controller;
   ComPtr<ICoreWebView2> web;
   CompositionHost composition;
+  PanelInputRegion inputRegion;
   observatory_menu::Controls controls;
   std::wstring allowedUri, browserVersion;
   std::mutex mailbox;
@@ -250,6 +254,7 @@ public:
   std::thread worker;
   bool ready = false, waiting = false, fallback = false, menuOpen = false, closing = false;
   bool automaticQuality = true, hiding = false, hiddenByUser = false, minimized = false;
+  bool inputReady = false, syncingInput = false;
   bool topmost = true, verifyStarted = false, verifyFinished = false, liveFinished = false, liveInspecting = false, ownerExited = false;
   int shellProbePhase = 0;
   unsigned dragRequests = 0, menuRequests = 0, wheelBridgeMessages = 0;
@@ -274,6 +279,7 @@ public:
     stopping = true; SetEvent(wake);
     if (worker.joinable()) worker.join();
     composition.detach();
+    inputRegion.destroy();
     if (controller) controller->Close();
     web.Reset(); controller.Reset(); environment.Reset();
     CloseHandle(wake);
@@ -318,6 +324,22 @@ public:
       {"automaticQuality", automaticQuality}, {"automaticRouteSync", controls.automatic.load()},
       {"topmost", topmost}, {"x", r.left}, {"y", r.top}, {"positionSaved", true}});
   }
+  void syncInput() {
+    if (!inputRegion.hwnd() || syncingInput) return;
+    syncingInput = true;
+    bool success = true;
+    if (fallback) inputRegion.hidden();
+    else {
+      const double scale = appliedZoom * dpi() / 96.;
+      // BG10's panel SDF uses a 14 DIP corner radius. Only the owned input
+      // window gets this region; the complete render canvas remains unclipped.
+      const bool visible = inputReady && !opt.checking() && !hiddenByUser &&
+        !minimized && IsWindowVisible(window);
+      success = inputRegion.sync(window, renderMargin * scale, 14. * scale, visible);
+    }
+    syncingInput = false;
+    if (!success && !fallback) useFallback("面板输入区域不可用：使用可交互的简化显示");
+  }
   void resizeToPanel() {
     if (!window) return;
     RECT work = workArea(), desired{0, 0,
@@ -331,6 +353,7 @@ public:
     int y = std::clamp(current.top, work.top, std::max(work.top, work.bottom - h));
     SetWindowPos(window, topmost ? HWND_TOPMOST : HWND_NOTOPMOST, x, y, w, h, SWP_NOACTIVATE);
     if (controller) { RECT r; GetClientRect(window, &r); controller->put_Bounds(r); composition.resize(r); }
+    syncInput();
   }
   void post(const Json& j) {
     if (web && ready && !fallback) web->PostWebMessageAsJson(wide(j.dump()).c_str());
@@ -421,6 +444,7 @@ public:
   }
   void useFallback(const char* reason) {
     fallback = true; ready = false; waiting = false;
+    inputReady = false; inputRegion.hidden();
     fallbackReason = reason;
     { std::lock_guard<std::mutex> guard(mailbox); connectionStatus = reason; }
     if (controller) controller->put_IsVisible(FALSE);
@@ -428,7 +452,8 @@ public:
     // A failed renderer has no GPU surface. Restore a GDI redirection surface
     // only for this explicit, readable fallback; normal rendering stays alpha.
     const auto style = GetWindowLongPtrW(window, GWL_EXSTYLE);
-    SetWindowLongPtrW(window, GWL_EXSTYLE, style & ~WS_EX_NOREDIRECTIONBITMAP);
+    SetWindowLongPtrW(window, GWL_EXSTYLE,
+      style & ~(WS_EX_NOREDIRECTIONBITMAP | WS_EX_LAYERED | WS_EX_TRANSPARENT));
     SetWindowPos(window, nullptr, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
     InvalidateRect(window, nullptr, TRUE);
     if (!opt.verify.empty() && opt.forceFallback) SetTimer(window, TIMER_VERIFY, 200, nullptr);
@@ -494,6 +519,7 @@ public:
     if (controller) controller->put_IsVisible(TRUE);
     ComPtr<ICoreWebView2_3> w3; if (web && SUCCEEDED(web.As(&w3))) w3->Resume();
     post({{"kind", "show"}}); drain();
+    syncInput();
     return true;
   }
   void finishHide() {
@@ -501,6 +527,7 @@ public:
     hiding = false; hiddenByUser = true; KillTimer(window, TIMER_HIDE);
     post({{"kind", "hidden"}});
     if (controller) controller->put_IsVisible(FALSE);
+    inputRegion.hidden();
     ShowWindow(window, SW_HIDE);
   }
   void beginHide() {
@@ -585,10 +612,12 @@ public:
           }
         }
         SIZE next{LONG(std::ceil(w)), LONG(std::ceil(h))};
+        inputReady = true;
         if (panel.cx != next.cx || panel.cy != next.cy) { panel = next; resizeToPanel(); }
+        syncInput();
       }
     } else if (kind == "view-state" && j.contains("zoom") && j["zoom"].is_number()) {
-      const double z = j["zoom"]; if (std::isfinite(z) && z >= .75 && z <= 2) appliedZoom = z;
+      const double z = j["zoom"]; if (std::isfinite(z) && z >= .75 && z <= 2) { appliedZoom = z; syncInput(); }
     } else if (kind == "hidden-complete" && hiding) finishHide();
     else if (kind == "menu") { ++menuRequests; if (!opt.checking()) PostMessageW(window, WM_CONTEXTMENU, 0, 0); }
     else if (kind == "drag") {
@@ -617,7 +646,7 @@ public:
             if (FAILED(status) || !cc || FAILED(cc->QueryInterface(IID_PPV_ARGS(&controller)))) {
               useFallback("WebView2 合成控制器创建失败：使用简化显示"); return S_OK;
             }
-            if (FAILED(composition.attach(window, cc, controller.Get()))) {
+            if (FAILED(composition.attach(window, cc, controller.Get(), inputRegion.hwnd()))) {
               useFallback("桌面透明合成初始化失败：使用简化显示"); return S_OK;
             }
             if (FAILED(controller->get_CoreWebView2(&web)) || !web) { useFallback("WebView2 页面不可用"); return S_OK; }
@@ -670,11 +699,17 @@ public:
     const auto style = DWORD(GetWindowLongPtrW(window, GWL_STYLE));
     const auto extended = DWORD(GetWindowLongPtrW(window, GWL_EXSTYLE));
     RECT outer{}; GetWindowRect(window, &outer);
+    RECT inputBounds = inputRegion.bounds();
     const RECT work = workArea();
     Json shell = {{"popup", (style & WS_POPUP) != 0}, {"caption", (style & WS_CAPTION) != 0},
       {"thickFrame", (style & WS_THICKFRAME) != 0}, {"toolWindow", (extended & WS_EX_TOOLWINDOW) != 0},
       {"noActivate", (extended & WS_EX_NOACTIVATE) != 0}, {"topmost", (extended & WS_EX_TOPMOST) != 0},
       {"noRedirectionBitmap", (extended & WS_EX_NOREDIRECTIONBITMAP) != 0},
+      {"renderMousePassThrough", (extended & (WS_EX_LAYERED | WS_EX_TRANSPARENT)) == (WS_EX_LAYERED | WS_EX_TRANSPARENT)},
+      {"inputWindowCreated", inputRegion.hwnd() != nullptr},
+      {"inputWindowVisible", inputRegion.hwnd() && IsWindowVisible(inputRegion.hwnd()) != FALSE},
+      {"inputBoundsPixels", {inputBounds.left, inputBounds.top, inputBounds.right, inputBounds.bottom}},
+      {"inputCornerRadiusPixels", inputRegion.radius()},
       {"compositionAttached", composition.attached}, {"backgroundAlpha", composition.backgroundAlpha},
       {"clientEqualsWindow", outer.right - outer.left == r.right && outer.bottom - outer.top == r.bottom},
       {"mouseMessages", composition.mouseMessages}, {"wheelMessages", composition.wheelMessages},
@@ -687,6 +722,8 @@ public:
       shell.value("popup", false) && !shell.value("caption", true) && !shell.value("thickFrame", true) &&
       shell.value("toolWindow", false) && shell.value("noActivate", false) &&
       shell.value("noRedirectionBitmap", false) && shell.value("clientEqualsWindow", false) &&
+      shell.value("renderMousePassThrough", false) && shell.value("inputWindowCreated", false) &&
+      shell.value("inputCornerRadiusPixels", 0) > 0 &&
       std::abs(page.value("renderMargin", -1.) - renderMargin) < .001;
     if (opt.verifyShell) passed = passed && page.contains("nativeInput") && page["nativeInput"].is_object() &&
       page["nativeInput"].value("mouseDown", 0) >= 2 && page["nativeInput"].value("contextMenu", 0) >= 1 &&
@@ -881,6 +918,39 @@ public:
   }
 };
 
+LRESULT CALLBACK panelInputProcedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
+  Host* h = (Host*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
+  if (msg == WM_NCCREATE) {
+    h = (Host*)((CREATESTRUCTW*)lp)->lpCreateParams;
+    SetWindowLongPtrW(hwnd, GWLP_USERDATA, (LONG_PTR)h);
+  }
+  if (!h) return DefWindowProcW(hwnd, msg, wp, lp);
+  if (msg == WM_LBUTTONDOWN && !h->opt.checking() && !h->closing) {
+    ++h->dragRequests;
+    // Enter the owner's move loop while the physical button is still down.
+    ReleaseCapture(); SendMessageW(h->window, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+    h->syncInput(); return 0;
+  }
+  if (msg == WM_MOUSEWHEEL && !h->fallback) { h->scrollRows(GET_WHEEL_DELTA_WPARAM(wp)); return 0; }
+  if (!h->fallback && h->composition.mouse(msg, wp, lp, hwnd)) return 0;
+  switch (msg) {
+  case WM_MOUSEACTIVATE: return MA_NOACTIVATE;
+  case WM_NCHITTEST: return HTCLIENT; // USER32 has already applied this HWND's round region.
+  case WM_SETCURSOR:
+    if (LOWORD(lp) == HTCLIENT && h->composition.setCursor()) return TRUE;
+    break;
+  case WM_CONTEXTMENU: h->showMenu(); return 0;
+  case WM_CLOSE: PostMessageW(h->window, WM_CLOSE, 0, 0); return 0;
+  case WM_ERASEBKGND: return 1;
+  case WM_PAINT: { PAINTSTRUCT paint{}; BeginPaint(hwnd, &paint); EndPaint(hwnd, &paint); return 0; }
+  case WM_NCDESTROY:
+    h->inputRegion.destroyed(hwnd);
+    SetWindowLongPtrW(hwnd, GWLP_USERDATA, 0);
+    break;
+  }
+  return DefWindowProcW(hwnd, msg, wp, lp);
+}
+
 LRESULT CALLBACK windowProcedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
   Host* h = (Host*)GetWindowLongPtrW(hwnd, GWLP_USERDATA);
   if (msg == WM_NCCREATE) {
@@ -908,6 +978,7 @@ LRESULT CALLBACK windowProcedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
     break;
   case WM_MOVE: case WM_MOVING:
     if (h->controller) h->controller->NotifyParentWindowPositionChanged();
+    h->syncInput();
     break;
   case WM_LBUTTONDOWN:
     if (h->fallback && !h->opt.checking()) { ReleaseCapture(); SendMessageW(hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0); return 0; }
@@ -921,6 +992,7 @@ LRESULT CALLBACK windowProcedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
     if (h->controller) h->controller->put_IsVisible(wp != SIZE_MINIMIZED && !h->hiddenByUser);
     if (wp == SIZE_MINIMIZED) h->post({{"kind", "hidden"}});
     else if (restoring && h->ready && !h->closing && !h->hiding && !h->hiddenByUser) h->post({{"kind", "show"}});
+    h->syncInput();
     return 0;
   }
   case WM_DPICHANGED:
@@ -942,6 +1014,7 @@ LRESULT CALLBACK windowProcedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
     if (wp == TIMER_HIDE) { h->finishHide(); return 0; }
     break;
   case WM_DESTROY:
+    h->inputRegion.destroy();
     h->stopping = true; SetEvent(h->wake); KillTimer(hwnd, TIMER_CLOSE); KillTimer(hwnd, TIMER_VERIFY); KillTimer(hwnd, TIMER_OWNER); KillTimer(hwnd, TIMER_HIDE);
     PostQuitMessage(h->exitCode); return 0;
   }
@@ -1018,17 +1091,21 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int) {
       : L"Codex Observatory 0.4.9 · 当前状态";
     RECT initialWork{}; SystemParametersInfoW(SPI_GETWORKAREA, 0, &initialWork, 0);
     const DWORD floatingStyles = (opt.inspectShell ? 0 : WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE) | WS_EX_NOREDIRECTIONBITMAP |
+      WS_EX_LAYERED | WS_EX_TRANSPARENT |
       (host.topmost ? WS_EX_TOPMOST : 0);
     HWND hwnd = CreateWindowExW(floatingStyles, className.c_str(), title,
       WS_POPUP, host.savedPosition.right ? host.savedPosition.left : initialWork.left + 20,
       host.savedPosition.right ? host.savedPosition.top : initialWork.top + 20, 500, 320, nullptr, nullptr, instance, &host);
     if (!hwnd) throw std::runtime_error("Window creation failed");
+    const bool inputAvailable = PanelInputRegion::enableVisualPassThrough(hwnd) &&
+      host.inputRegion.create(instance, hwnd, panelInputProcedure, &host);
     host.zoom = host.limitZoom(host.zoom); host.resizeToPanel(); host.startWorker();
     if (host.owner) SetTimer(hwnd, TIMER_OWNER, 200, nullptr);
     // Diagnostic modes keep their real HWND hidden and drive only their own page.
     if (!opt.checking()) ShowWindow(hwnd, opt.inspectShell ? SW_SHOWNORMAL : SW_SHOWNOACTIVATE);
     else SetTimer(hwnd, TIMER_VERIFY, 200, nullptr);
-    host.initializeWebView();
+    if (inputAvailable) host.initializeWebView();
+    else host.useFallback("桌面输入区域初始化失败：使用可交互的简化显示");
     MSG msg;
     while (GetMessageW(&msg, nullptr, 0, 0) > 0) { TranslateMessage(&msg); DispatchMessageW(&msg); }
     exitCode = host.exitCode;

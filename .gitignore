@@ -7,6 +7,7 @@ release/
 artifacts/
 desktop/build/
 desktop/state/
+desktop/fixtures/input-boundary/
 deployment/build/
 deployment/build-report.json
 **/*.exe

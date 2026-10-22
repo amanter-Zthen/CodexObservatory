@@ -48,7 +48,7 @@ function main() {
   }
   const overlayNames = ['display_host_windows.go', 'display_host_windows_test.go', 'display_controls_windows.go', 'display_controls_windows_test.go', 'route_pulse_windows.go', 'route_pulse_windows_test.go', 'startup_visibility_windows_test.go'];
   requireSourceSet(backend.sourceHashes, ['deployment/build-overlay.cjs', 'deployment/native-source-manifest.json', 'tools/release-common.cjs', ...overlayNames.map(file => 'deployment/overlay/' + file)], 'Backend build sources');
-  requireSourceSet(desktop.sourceHashes, ['desktop/host.cpp', 'desktop/composition_host.h', 'desktop/legacy_menu.h', 'desktop/vendor/json.hpp', 'tools/build-desktop.ps1'], 'Desktop build sources');
+  requireSourceSet(desktop.sourceHashes, ['desktop/host.cpp', 'desktop/composition_host.h', 'desktop/input_region.h', 'desktop/legacy_menu.h', 'desktop/vendor/json.hpp', 'tools/build-desktop.ps1'], 'Desktop build sources');
   const artifacts = {
     backend: checkArtifact(backend.artifacts && backend.artifacts.backend, 'deployment/build/CodexObservatory.exe', 2),
     watcher: checkArtifact(backend.artifacts && backend.artifacts.watcher, 'deployment/build/CodexObservedLauncher.exe', 2),
@@ -109,7 +109,7 @@ function main() {
     formatVersion: 1,
     name: 'CodexObservatory',
     version: visual.lock.version,
-    revision: visual.lock.shellRevision || visual.lock.engineeringRevision || visual.lock.version,
+    revision: visual.lock.publicRelease || visual.lock.shellRevision || visual.lock.engineeringRevision || visual.lock.version,
     assembledAt: new Date().toISOString(),
     platform: 'windows-amd64',
     status: 'ASSEMBLED_FROM_CURRENT_BUILD_RECORDS',

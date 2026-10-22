@@ -2,7 +2,7 @@
 // Nothing here is real routing evidence or account quota.
 (function (NS) {
   'use strict';
-  const MODELS = ['gpt-6.1-sol', 'gpt-6-sol', 'gpt-6.1-sol', 'gpt-6.1-sol-mini'];
+  const MODELS = ['gpt-6.1-sol', 'gpt-6-sol', 'gpt-6.1-sol', 'gpt-6-astra'];
   const MIXES = {
     mixed: ['green', 'yellow', 'red', 'green', 'green', 'yellow'],
     green: ['green'], yellow: ['yellow'], red: ['red', 'green'],
@@ -16,7 +16,9 @@
       let outputting = o.output === 'on' ? true : o.output === 'off' ? false : cyc >= 0.46 && cyc < 0.88 && color !== 'yellow';
       const rate = 14 + 9 * Math.sin(t * 0.27 + i * 1.7) + 6 * Math.sin(t * 0.71 + i);
       rows.push({
-        thread_id: 'synthetic-' + i, turn_id: 'turn-' + i, model: MODELS[i % MODELS.length], requested_model: MODELS[i % MODELS.length],
+        thread_id: 'synthetic-' + i, turn_id: 'turn-' + i, model: MODELS[i % MODELS.length],
+        requested_model: color==='red'?'gpt-6-astra':MODELS[i % MODELS.length],
+        reported_model: color==='yellow'?'':MODELS[i % MODELS.length],
         route: color === 'green' ? 'match' : color === 'red' ? 'mismatch' : 'pending', color,
         activity: outputting ? 'running' : color === 'yellow' ? 'tool_wait' : 'running',
         speed: '—/s', speed_valid: false, speed_fresh: false, turn_anomaly: color === 'red', health_valid: true,

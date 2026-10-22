@@ -4,18 +4,18 @@
 
 把监控做成桌面艺术，把路由状态亮在眼前。六层玻璃、流线、粒子与动态文字，把正在工作的 Codex 变成一座发光观测站——赏心悦目，也有据可看。
 
-[English — 内容逐项对应](README.en.md) · [下载 0.4.9](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9) · [4K / 60 fps 完整演示](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9/CodexObservatory-0.4.9-4K60.mp4)
+[English — 内容逐项对应](README.en.md) · [下载 0.4.9-r1](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r1) · [4K / 60 fps 完整演示](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
 
-[![Codex Observatory 六层视觉演示](media/preview.gif)](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9/CodexObservatory-0.4.9-4K60.mp4)
+[![Codex Observatory 六层视觉演示](media/preview.gif)](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
 
-*动图是轻量预览；完整视频为 3840 × 2160、60 fps、36 秒，含配乐。视频使用合成数据，展示无模型入场 → 模型启动 → 并行状态 → 收拢 → 消散的完整过程。*
+*动图是轻量预览；完整视频为 3840 × 2160、60 fps、37 秒、2220 帧，含配乐。合成快照经过实际组装页面，展示无模型入场 → 一绿 → 两行含黄 → 四行含红与 gpt-6-astra → 新回合全绿 → 收拢 → 消散。*
 
 ## 好看，也要看得明白
 
 - **让路由状态可见。** 比较请求与响应报告的模型标签，以绿、黄、红区分一致、待核验和本回合已观测的标签异常。异常留在当前回合中，后续一次匹配不会把它抹掉。
 - **让状态变化有美感。** 玻璃升起、镜头拉远、模型文字逐字入场、刻度向两侧展开；输出时光流与数字一起运动，结束时先收拢，再消散。
 - **六层完整开放。** 玻璃背景、流动曲线、漂浮光点、外框刻度、信息文字、前景泛光，均提供源码、独显预览与修改入口。
-- **悬浮在工作旁边。** Windows 原生透明宿主复用系统 WebView2，支持置顶、拖动、缩放、画质设置、当前状态菜单与路由同步。
+- **悬浮在工作旁边。** Windows 原生透明宿主复用系统 WebView2，支持置顶、拖动、缩放、画质设置、当前状态菜单与路由同步。r1 将完整视觉窗口设为输入穿透，用独立小圆角输入窗口覆盖面板，让泛光外缘的点击落到下方应用。
 - **半实时，先求顺畅。** 最新状态合并、有限缓存、预热、单帧 GPU 背压与平滑估速，让动画完整性和响应能力优先于逐毫秒追赶。数字采用 0.4.8 的 0.65 秒插值节奏。
 - **五秒轻量触发。** 自动 pulse 唤醒已有的增量读取，不积累补发队列。悬浮层不带会话历史；原后端仍保留本地证据与记录功能。
 
@@ -25,7 +25,7 @@
 
 下载源码后，直接用支持 WebGL2 的浏览器打开 [`visual/index.html`](visual/index.html)。右侧控制区可以选择模型数量、状态颜色、输出、额度、镜头、画质，以及六层独显。这个预览使用合成数据，无需后端或 Node。
 
-使用 [Windows x64 Release](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9) 时，解压后运行：
+使用 [Windows x64 Release](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r1) 时，解压后运行：
 
 ```powershell
 .\desktop\CodexObservatory.exe --preview
@@ -45,6 +45,8 @@
 | 06 · 前景泛光 | 入场暖光、发光合成、宽范围柔和收束 | [清单](layers/06-glow.json) · [预览](media/layer-glow.png) |
 
 六层共用一套时间轴、布局和合成器；清单指向实际源文件，避免复制出六套互相漂移的工程。当前 39 个运行脚本的 SHA-256 固定在 [`layers.lock.json`](layers.lock.json)。详见 [图层、参数与动画顺序](docs/LAYERS.zh-CN.md)。
+
+r1 的玻璃状态与实际快照联动：变化体现在玻璃片状态标记、墨色和对应档案，香槟暖色材质继续保留。离线演示也逐帧更新玻璃，使用与交互页面相同的状态驱动链。
 
 ## 接口、构建与验证
 

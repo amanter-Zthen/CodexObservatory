@@ -1,0 +1,30 @@
+{
+  "version": "0.4.9",
+  "resolution": [
+    3840,
+    2160
+  ],
+  "fps": 60,
+  "duration": 37,
+  "frames": 2220,
+  "source": "assembled preview page: SnapshotFeed -> app.step -> Animator -> six-layer WebGL renderer",
+  "synthetic": true,
+  "maxFramesInFlight": 1,
+  "encoderThreads": 4,
+  "glassFrameInterval": 0,
+  "idlePreparationSeconds": 6,
+  "glassStates": [
+    "idle",
+    "green",
+    "yellow",
+    "red"
+  ],
+  "models": [
+    "gpt-6.1-sol",
+    "gpt-6-sol",
+    "gpt-6-astra"
+  ],
+  "endHidden": true,
+  "elapsedSeconds": 173.102,
+  "musicIncluded": true
+}

@@ -20,7 +20,7 @@
   class Animator {
     constructor() {
       this.stage = new NS.Stage(); this.ribbons = new NS.Ribbons();
-      this.glassDynamics = new window.BG16.dynamics.Dynamics();
+      this.glassDynamics = new window.BG16.dynamics.Dynamics();this.glassState='auto';
       this.glassAppearance = this.glassDynamics.appearance;
       this.panelWanted = true;this.glassWanted=true;this.panelReplay=false;this.glassReplay=false;this.lifecycle='visible';
       this.poses = new Map(); this.t = 0; this.breathe = 0;this.motionTime=0;this.reducedMotion=false;this.offset=0;
@@ -81,6 +81,14 @@
       const q = s.quota || {};
       this.qy.set(mid);
       this.qlevel.set(q.known ? clamp01(q.remaining_percent / 100) : 0); if (q.known) this.qval.set(q.remaining_percent);
+      this.setGlassState(this.glassState);
+    }
+    setGlassState(mode='auto') {
+      if(!['auto','idle','green','yellow','red'].includes(mode))mode='auto';
+      this.glassState=mode;
+      const rows=this.snapshot.rows||[];
+      const state=mode!=='auto'?mode:!rows.length?'idle':rows.some(r=>r.color==='red')?'red':rows.some(r=>r.color==='yellow')?'yellow':'green';
+      this.glassDynamics.requestState(state);
     }
     status(T) {
       const rows = this.snapshot.rows || [];

@@ -1,0 +1,1062 @@
+[
+  {
+    "time": 0,
+    "hidden": true,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 0
+  },
+  {
+    "time": 0.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 1
+  },
+  {
+    "time": 1,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 31
+  },
+  {
+    "time": 1.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 61
+  },
+  {
+    "time": 2,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 91
+  },
+  {
+    "time": 2.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 121
+  },
+  {
+    "time": 3,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 151
+  },
+  {
+    "time": 3.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 181
+  },
+  {
+    "time": 4,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 211
+  },
+  {
+    "time": 4.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-enter",
+    "glassTime": 5.999999999999984,
+    "models": [],
+    "glassDraws": 241
+  },
+  {
+    "time": 5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "steady",
+    "glassTime": 6.131601653534128,
+    "models": [],
+    "glassDraws": 271
+  },
+  {
+    "time": 5.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "steady",
+    "glassTime": 6.608644043224117,
+    "models": [],
+    "glassDraws": 301
+  },
+  {
+    "time": 6,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 7.108336252870095,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 331
+  },
+  {
+    "time": 6.5,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 7.60833314739381,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 361
+  },
+  {
+    "time": 7,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 8.108333119518402,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 391
+  },
+  {
+    "time": 7.5,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 8.608333119283746,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 421
+  },
+  {
+    "time": 8,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 9.108333119281847,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 451
+  },
+  {
+    "time": 8.5,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 9.608333119281827,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 481
+  },
+  {
+    "time": 9,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 10.108333119281852,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 511
+  },
+  {
+    "time": 9.5,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 10.608333119281877,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 541
+  },
+  {
+    "time": 10,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 11.108333119281902,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 571
+  },
+  {
+    "time": 10.5,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 11.608333119281927,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 601
+  },
+  {
+    "time": 11,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 12.108333119281951,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 631
+  },
+  {
+    "time": 11.5,
+    "hidden": false,
+    "rows": 1,
+    "height": 112,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 12.608333119281976,
+    "models": [
+      "gpt-6.1-sol"
+    ],
+    "glassDraws": 661
+  },
+  {
+    "time": 12,
+    "hidden": false,
+    "rows": 2,
+    "height": 112.06358442813908,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "archive-transition",
+    "glassTime": 13.108333119282001,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 691
+  },
+  {
+    "time": 12.5,
+    "hidden": false,
+    "rows": 2,
+    "height": 118.234711681425,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "archive-transition",
+    "glassTime": 13.608333119282026,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 721
+  },
+  {
+    "time": 13,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.20635620950435,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "archive-transition",
+    "glassTime": 14.108333119282051,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 751
+  },
+  {
+    "time": 13.5,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.28093963466672,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "archive-transition",
+    "glassTime": 14.608333119282076,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 781
+  },
+  {
+    "time": 14,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.2862055856284,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "archive-transition",
+    "glassTime": 15.1083331192821,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 811
+  },
+  {
+    "time": 14.5,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.28657187357794,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "steady",
+    "glassTime": 15.608333119282001,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 841
+  },
+  {
+    "time": 15,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.28659727976569,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "steady",
+    "glassTime": 16.108333119282015,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 871
+  },
+  {
+    "time": 15.5,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.28659904101617,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "steady",
+    "glassTime": 16.608333119281987,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 901
+  },
+  {
+    "time": 16,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.28659916309991,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "steady",
+    "glassTime": 17.10833311928196,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 931
+  },
+  {
+    "time": 16.5,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.28659917156216,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "steady",
+    "glassTime": 17.60833311928193,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 961
+  },
+  {
+    "time": 17,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.28659917214874,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "steady",
+    "glassTime": 18.1083331192819,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 991
+  },
+  {
+    "time": 17.5,
+    "hidden": false,
+    "rows": 2,
+    "height": 119.2865991721894,
+    "glassState": "yellow",
+    "glassDesired": "yellow",
+    "glassPhase": "steady",
+    "glassTime": 18.608333119281873,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol"
+    ],
+    "glassDraws": 1021
+  },
+  {
+    "time": 18,
+    "hidden": false,
+    "rows": 4,
+    "height": 119.7391388948496,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "archive-transition",
+    "glassTime": 19.108333119281845,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1051
+  },
+  {
+    "time": 18.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 163.6599587782559,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "archive-transition",
+    "glassTime": 19.608333119281816,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1081
+  },
+  {
+    "time": 19,
+    "hidden": false,
+    "rows": 4,
+    "height": 170.57529572674423,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "archive-transition",
+    "glassTime": 20.108333119281788,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1111
+  },
+  {
+    "time": 19.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.10611692818676,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "archive-transition",
+    "glassTime": 20.60833311928176,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1141
+  },
+  {
+    "time": 20,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14359547533198,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "archive-transition",
+    "glassTime": 21.10833311928173,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1171
+  },
+  {
+    "time": 20.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.1462024005173,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 21.608333119281703,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1201
+  },
+  {
+    "time": 21,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14638322009023,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 22.108333119281674,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1231
+  },
+  {
+    "time": 21.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.1463957551693,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 22.608333119281646,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1261
+  },
+  {
+    "time": 22,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639662405682,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 23.108333119281617,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1291
+  },
+  {
+    "time": 22.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668428393,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 23.60833311928159,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1321
+  },
+  {
+    "time": 23,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.1463966884585,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 24.10833311928156,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1351
+  },
+  {
+    "time": 23.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668874787,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 24.608333119281532,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1391
+  },
+  {
+    "time": 24,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876796,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 25.108333119281504,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1421
+  },
+  {
+    "time": 24.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "red",
+    "glassDesired": "red",
+    "glassPhase": "steady",
+    "glassTime": 25.608333119281475,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1451
+  },
+  {
+    "time": 25,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 26.108333119281447,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1481
+  },
+  {
+    "time": 25.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 26.60833311928142,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1511
+  },
+  {
+    "time": 26,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 27.10833311928139,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1541
+  },
+  {
+    "time": 26.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 27.60833311928136,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1571
+  },
+  {
+    "time": 27,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "archive-transition",
+    "glassTime": 28.108333119281333,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1601
+  },
+  {
+    "time": 27.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "green",
+    "glassDesired": "green",
+    "glassPhase": "steady",
+    "glassTime": 28.608333119281305,
+    "models": [
+      "gpt-6.1-sol",
+      "gpt-6-sol",
+      "gpt-6.1-sol",
+      "gpt-6-astra"
+    ],
+    "glassDraws": 1631
+  },
+  {
+    "time": 28,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "archive-transition",
+    "glassTime": 29.108333119281276,
+    "models": [],
+    "glassDraws": 1661
+  },
+  {
+    "time": 28.5,
+    "hidden": false,
+    "rows": 4,
+    "height": 171.14639668876922,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "archive-transition",
+    "glassTime": 29.608333119281248,
+    "models": [],
+    "glassDraws": 1691
+  },
+  {
+    "time": 29,
+    "hidden": false,
+    "rows": 0,
+    "height": 161.8919046705158,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "archive-transition",
+    "glassTime": 30.10833311928122,
+    "models": [],
+    "glassDraws": 1721
+  },
+  {
+    "time": 29.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 117.63618008381957,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "steady",
+    "glassTime": 30.60833311928119,
+    "models": [],
+    "glassDraws": 1751
+  },
+  {
+    "time": 30,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.41963831527731,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "steady",
+    "glassTime": 31.108333119281163,
+    "models": [],
+    "glassDraws": 1781
+  },
+  {
+    "time": 30.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.0294724227195,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "steady",
+    "glassTime": 31.608333119281134,
+    "models": [],
+    "glassDraws": 1811
+  },
+  {
+    "time": 31,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.00204799885768,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "steady",
+    "glassTime": 32.108333119281106,
+    "models": [],
+    "glassDraws": 1841
+  },
+  {
+    "time": 31.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.00014202473658,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "steady",
+    "glassTime": 32.60833311928108,
+    "models": [],
+    "glassDraws": 1871
+  },
+  {
+    "time": 32,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.00000984531903,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-exit",
+    "glassTime": 33.108125819487256,
+    "models": [],
+    "glassDraws": 1901
+  },
+  {
+    "time": 32.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.00000068243813,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-exit",
+    "glassTime": 33.279532069490614,
+    "models": [],
+    "glassDraws": 1931
+  },
+  {
+    "time": 33,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.00000004730322,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-exit",
+    "glassTime": 33.28329006231278,
+    "models": [],
+    "glassDraws": 1961
+  },
+  {
+    "time": 33.5,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.0000000032788,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-exit",
+    "glassTime": 33.28333292279398,
+    "models": [],
+    "glassDraws": 1991
+  },
+  {
+    "time": 34,
+    "hidden": false,
+    "rows": 0,
+    "height": 112.00000000022727,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 33.28333332659148,
+    "models": [],
+    "glassDraws": 2021
+  },
+  {
+    "time": 34.5,
+    "hidden": true,
+    "rows": 0,
+    "height": 112.00000000001579,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 33.28333332659148,
+    "models": [],
+    "glassDraws": 2027
+  },
+  {
+    "time": 35,
+    "hidden": true,
+    "rows": 0,
+    "height": 112.0000000000011,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 33.28333332659148,
+    "models": [],
+    "glassDraws": 2027
+  },
+  {
+    "time": 35.5,
+    "hidden": true,
+    "rows": 0,
+    "height": 112.00000000000013,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 33.28333332659148,
+    "models": [],
+    "glassDraws": 2027
+  },
+  {
+    "time": 36,
+    "hidden": true,
+    "rows": 0,
+    "height": 112.00000000000013,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 33.28333332659148,
+    "models": [],
+    "glassDraws": 2027
+  },
+  {
+    "time": 36.5,
+    "hidden": true,
+    "rows": 0,
+    "height": 112.00000000000013,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 33.28333332659148,
+    "models": [],
+    "glassDraws": 2027
+  },
+  {
+    "time": 36.983333333333334,
+    "hidden": true,
+    "rows": 0,
+    "height": 112.00000000000013,
+    "glassState": "idle",
+    "glassDesired": "idle",
+    "glassPhase": "glass-hidden",
+    "glassTime": 33.28333332659148,
+    "models": [],
+    "glassDraws": 2027
+  }
+]

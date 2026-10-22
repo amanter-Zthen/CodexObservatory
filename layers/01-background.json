@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "visual/engine/glass_background.js",
-      "sha256": "4ae61eb93fbaac561024fd37f66b70776a302b166074d635b26b0a5456cb7678"
+      "sha256": "f573c879d1a413807dd1d7aff1b434a8ce3798199c9fe7c3e356e7cbb795731a"
     },
     {
       "path": "visual/engine/presentation.js",

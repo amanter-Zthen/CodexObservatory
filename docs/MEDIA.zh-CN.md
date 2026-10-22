@@ -1,16 +1,30 @@
-# 演示制作与上传
+# 0.4.9-r1 演示制作与上传
 
 [English](MEDIA.en.md) · [首页](../README.md)
 
-发布演示由当前六层 WebGL 代码逐帧离线渲染，使用合成状态，没有录入真实会话或凭据。完整流程为无模型入场、模型启动、1 → 2 → 4 个模型、收拢回待机、整窗消散。最后一帧已确认处于 hidden 状态。
+发布演示由实际组装页面逐帧离线渲染，合成快照经过 `SnapshotFeed → app.step → Animator → 六层 WebGL`，没有录入真实会话或凭据。离线玻璃每帧更新，覆盖 idle、green、yellow、red 状态，最后一帧处于 hidden。演示模型使用 `gpt-6-astra`，已替换原 mini 示例。
 
 | 交付 | 规格 | 文件大小 | 位置 |
 | --- | --- | --- | --- |
-| 完整视频 | 3840 × 2160、60 fps、36 秒、2160 帧；H.264 + AAC 立体声 | 19,046,727 字节，约 18.2 MiB | [Release MP4](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9/CodexObservatory-0.4.9-4K60.mp4) |
-| README 动图 | 800 × 450、8 fps、完整 36 秒；无声音 | 6,380,321 字节，约 6.1 MiB | [preview.gif](../media/preview.gif) |
+| 完整视频 | 3840 × 2160、60 fps、37 秒、2220 帧；H.264 + AAC 立体声 | 20,733,919 字节，约 19.8 MiB | [Release MP4](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4) |
+| README 动图 | 800 × 450、名义 8 fps、296 帧、37.01 秒；无声音 | 6,706,297 字节，约 6.4 MiB | [preview.gif](../media/preview.gif) |
 | 海报及六层独显 | 当前代码实际绘制 | 以仓库文件为准 | [media](../media/) |
 
-配乐采用项目作者提供的 **DJ烬冷冷、情冷冷 — Claude Remotion（浴室氛围版）** 的 36 秒节选，带淡入淡出。FLAC 已成功解码，最终 MP4 的视频和音轨也已完整解码检查。原始 FLAC 与专辑封面不放进源码仓库；音乐署名和许可边界见 [致谢](../ACKNOWLEDGMENTS.md)。
+配乐采用项目作者提供的 **DJ烬冷冷、情冷冷 — Claude Remotion（浴室氛围版）** 的 37 秒节选，带淡入淡出。最终 MP4 的视频和音轨已完整解码检查。原始 FLAC 与专辑封面不放进源码仓库；音乐署名和许可边界见 [致谢](../ACKNOWLEDGMENTS.md)。
+
+## 时间线与状态
+
+| 时间 | 场景 |
+| --- | --- |
+| 0–6 秒 | 空闲；0.5 秒触发入场，先展示空档案与玻璃。 |
+| 6–12 秒 | 一行绿色模型，开始输出与数字运动。 |
+| 12–18 秒 | 两行模型，包含黄色待核验状态。 |
+| 18–25 秒 | 四行模型，包含红色异常与 `gpt-6-astra`。 |
+| 25–28 秒 | 四行进入新回合，全绿；不是抹去旧回合异常。 |
+| 28–32 秒 | 回到空闲，信息收拢。 |
+| 32–37 秒 | 整体消散，结束于 hidden。 |
+
+颜色联动体现在玻璃片状态标记、墨色和对应档案。玻璃主体仍保持暖色光学材质，不把整个阵列染成状态色。
 
 ## 上传路径
 

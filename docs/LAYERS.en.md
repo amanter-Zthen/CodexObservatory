@@ -1,8 +1,10 @@
-# Six-layer project
+# 0.4.9-r1 six-layer project
 
 [中文](LAYERS.zh-CN.md) · [Home](../README.en.md)
 
 All six layers belong to one 0.4.9 project and share the timeline and data layout. Open `visual/index.html` and use the layer controls to toggle or isolate each group; isolation preserves motion state. Foreground-bloom isolation still consumes the other layers' emission inputs, but outputs the light layer rather than the full base color.
+
+In r1, the interactive page and offline demo share the assembled `SnapshotFeed → app.step → Animator → six layers` path. Offline glass advances every frame. Idle, green, yellow, and red state changes drive pane markers, ink colors, and the corresponding archive while the main glass keeps its warm material. The synthetic model list replaces mini with `gpt-6-astra`.
 
 | Layer | Editing entry points | Main content |
 | --- | --- | --- |
@@ -22,6 +24,7 @@ Primary parameters are in [`presentation.js`](../visual/engine/presentation.js),
 | Item | Current value or behavior |
 | --- | --- |
 | Actual render allowance | 128 DIP on each side |
+| Input coverage | Full visual HWND passes input through; a separate small rounded input HWND covers only the panel |
 | Edge feathering | Quintic falloff across 120 DIP outside the panel |
 | Warm entry light | Original field peak retained; 0.42-second gathering; no independent exit warm light |
 | Model row | Hold for 0.18 seconds after the full name appears, then expand |
@@ -37,12 +40,15 @@ Primary parameters are in [`presentation.js`](../visual/engine/presentation.js),
 
 ## Editing and checking
 
-Edit the single source and run the base visual, current visual, and engineering checks. Record the corresponding artistic change when updating the lock, then regenerate the six layer manifests. Matching hashes prove file identity; browser checks still establish pixels and motion order.
+Edit the single source and run the base visual, current visual, engineering, and assembled-page glass-state checks. Record the corresponding artistic change when updating the lock, then regenerate the six layer manifests. Matching hashes prove file identity; browser checks still establish pixels and motion order.
 
 ```powershell
 npm test
 npm run test:current
 npm run test:engineering
+npm run test:glass
 ```
 
 The runtime uses a shared WebGL2 context, bounded texture/atlas resources, incremental glyph preparation, and one pending draw. Canvas fallback preserves information display but does not promise the full WebGL artwork. Static mode continues state updates while stopping decorative motion.
+
+At 216 DPI and 100% / 125% zoom, r1 passed real cross-process checks for outer-margin left/right clicks, wheel input, and rounded-corner pass-through, plus in-panel dragging, menus, and hide/reopen. Physical multi-monitor crossing and sustained use still require validation in the corresponding environment. See [validation](VALIDATION.en.md) for full results and [demo production](MEDIA.en.md) for the 37-second timeline.

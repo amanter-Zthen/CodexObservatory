@@ -63,7 +63,7 @@
       const T = s.T, R = s.ribbons, q = s.quota;
       const L = NS.layers.enabled, soloGlow=NS.layers.soloKey==='glow';
       const show=k=>soloGlow||L[k], profile=o.backdrop||'auto', glassEnabled=profile!=='legacy';
-      if(show('background')&&glassEnabled)this.glass.update(s.t,profile,s.glassDynamics);
+      if(show('background')&&glassEnabled)this.glass.update(s.t,profile,s.glassDynamics,o.glassFrameInterval);
       const crop=this.glass.crop(profile,s.W,s.H,s.quota.dock);this.lastCrop=crop;this.lastProfile=profile;
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.main.fb); gl.viewport(0, 0, this.w, this.h);
       gl.disable(gl.BLEND);
