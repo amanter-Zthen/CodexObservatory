@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<script>if(new URLSearchParams(location.search).has('desktop'))document.documentElement.classList.add('desktop','preparing');</script>
+<title>Codex Observatory 0.4.9 · 工程化候选</title>
+<style>
+  :root { color-scheme: light; --ink: #3a3a36; --soft: #8a877f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 13px/1.5 "Segoe UI", "Microsoft YaHei UI", sans-serif; color: var(--ink); background: #f3f0ea; }
+  header { padding: 22px 32px 6px; }
+  header small { letter-spacing: .22em; color: var(--soft); font: 600 10px "Bahnschrift", "Segoe UI", sans-serif; }
+  h1 { margin: 4px 0 2px; font: 600 22px "Segoe UI Variable Display", "Segoe UI", sans-serif; letter-spacing: .02em; }
+  h1 b { color: #2a6b51; }
+  header p { margin: 0; color: var(--soft); max-width: 980px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 32px; align-items: center; }
+  .bar button, .bar select, .bar label { font: inherit; padding: 6px 12px; border-radius: 8px; border: 1px solid #d9d4ca; background: #fffdf9; color: var(--ink); }
+  .bar button { cursor: pointer; } .bar button:hover { background: #fff; border-color: #c4bba9; }
+  .bar button:focus-visible, .bar select:focus-visible, .bar input:focus-visible { outline: 2px solid #2a6b51; outline-offset: 1px; }
+  .bar label { display: inline-flex; gap: 6px; align-items: center; }
+  #stage { margin: 0 32px; border-radius: 14px; min-height: 620px; display: flex; align-items: flex-start; justify-content: safe center; padding: 26px 0; overflow-x: auto; overflow-y: hidden; transition: background .6s; }
+  #panel { flex-shrink: 0; }
+  #stage[data-bg="warm"] { background: radial-gradient(120% 90% at 30% 20%, #fbf8f2 0%, #efe9df 55%, #e4dccd 100%); }
+  #stage[data-bg="light"] { background: linear-gradient(160deg, #e9eef3, #d8dfe6); }
+  #stage[data-bg="dark"] { background: radial-gradient(100% 80% at 60% 30%, #2b3036, #15181c); }
+  #stage[data-bg="photo"] { background: radial-gradient(60% 50% at 20% 30%, #6d8fa8 0%, transparent 70%), radial-gradient(50% 60% at 80% 70%, #b07d52 0%, transparent 70%), linear-gradient(135deg, #2f4659, #7b6a58); }
+  canvas { display: block; }
+  #stats { padding: 10px 32px 4px; font: 12px "Cascadia Mono", Consolas, monospace; color: #6d6a63; }
+  footer { padding: 4px 32px 28px; color: var(--soft); font-size: 12px; max-width: 1100px; }
+  kbd { font: 11px Consolas, monospace; border: 1px solid #d0cabd; border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; background: #fff; }
+  .layers {display:grid;grid-template-columns:repeat(6,minmax(140px,1fr));gap:9px;padding:4px 32px 16px}
+  .layer {padding:10px 12px;border:1px solid #d7cdbb;border-radius:10px;background:#fffcf6}
+  .layer label{font-weight:600;cursor:pointer;display:block}.layer small{display:block;color:#81796c;min-height:32px;font-size:11px;margin-top:3px}
+  .layer button{margin-top:5px;border:1px solid #d4c9b5;border-radius:5px;background:#f8f3e9;padding:2px 9px;color:#6b5b46;cursor:pointer}
+  .layer button[aria-pressed="true"]{background:#e6d7bd;color:#473e31}
+  .layer-actions{padding:0 32px 10px;display:flex;align-items:center;gap:14px;color:#857b6c}
+  #layers-all{border:1px solid #d4c9b5;border-radius:6px;padding:5px 11px;background:#fffaf0;color:#5c5140;cursor:pointer}
+  @media(max-width:1100px){.layers{grid-template-columns:repeat(3,minmax(140px,1fr));}}
+  @media(max-width:640px){.layers{grid-template-columns:repeat(2,minmax(120px,1fr));}}
+  body.desktop,.desktop body{background:transparent;overflow:hidden}
+  .desktop.preparing #panel{visibility:hidden}
+  .desktop header,.desktop .bar,.desktop .layers,.desktop .layer-actions,.desktop footer,.desktop #stats{display:none}
+  .desktop #stage{margin:0;padding:0;min-height:0;border-radius:0;overflow:hidden;background:transparent!important}
+</style>
+</head>
+<body>
+<header>
+  <small>CODEX OBSERVATORY · 0.4.9 ENGINEERING.1 · SYNTHETIC PREVIEW</small>
+  <h1>Codex Observatory 0.4.9 · <b>工程化候选</b></h1>
+  <p>状态灯沿用文字色相，保留适量亮度与彩度差。玻璃在开场约 0.30 秒开始升起，升起片段延长 0.40 秒；整段退场前移 0.10 秒，首片下落时接上整体消散；顶部与底部署名逐字反向飞入、飞出。会话到 2 个、4 个时，曲线数量分档增加。</p>
+</header>
+<div class="bar" role="toolbar" aria-label="播放控制">
+  <button id="reveal" type="button">启动</button>
+  <button id="exit" type="button">消散</button>
+  <button id="replay" type="button">从空白重播</button>
+  <label><input id="auto" type="checkbox"> 自动演示</label>
+  <label>会话 <select id="count"><option>0</option><option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>8</option><option>16</option></select></label>
+  <label>状态 <select id="mix"><option value="mixed">绿 / 黄 / 红</option><option value="green" selected>全部匹配（绿）</option><option value="yellow">全部待确认（黄）</option><option value="red">含异常（红）</option></select></label>
+  <label>背景取景 <select id="backdrop"><option value="auto" selected>自动 · 随模型切换</option><option value="running">第 3 框 · 运行中心</option><option value="idle">第 2 框 · 无模型</option><option value="legacy">G02 原底板对照</option></select></label>
+  <label><input id="glass-focus" type="checkbox" checked> 上下柔焦</label>
+  <label>输出 <select id="output"><option value="auto" selected>等待 / 输出自动切换</option><option value="on">持续输出（展开）</option><option value="off">等待输出（收拢）</option></select></label>
+  <label>额度 <select id="quota"><option value="87" selected>87%</option><option value="42">42%</option><option value="12">12%</option><option value="100">100%</option><option value="stale">过期数据</option><option value="unknown">未获取</option></select></label>
+  <label>质量 <select id="quality"><option value="0">完整</option><option value="1">平衡</option><option value="2">节能</option><option value="3">静态（数据持续更新）</option></select></label>
+  <label>缩放 <select id="zoom"><option value="1">100%</option><option value="1.25">125%</option><option value="1.5">150%</option><option value="2" selected>200%</option></select></label>
+  <label>桌面 <select id="bg"><option value="warm">暖白</option><option value="light">浅色</option><option value="dark">深色</option><option value="photo">壁纸</option></select></label>
+  <label>速度 <select id="speed"><option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×（看转场）</option></select></label>
+  <button id="pause" type="button">暂停</button>
+  <button id="glass-enter" type="button">玻璃入场</button>
+  <button id="glass-exit" type="button">玻璃出场</button>
+  <button id="glass-replay" type="button">重播玻璃</button>
+  <label>玻璃形态 <select id="glass-state"><option value="auto" selected>跟随预览状态</option><option value="green">运行</option><option value="yellow">等待</option><option value="red">异常</option><option value="idle">无模型</option></select></label>
+</div>
+<section class="layers" aria-label="主要图层">
+  <div class="layer"><label><input type="checkbox" data-layer="background" checked> 01 玻璃背景</label><small>暖香槟、上下柔焦与左向右扫光</small><button data-solo="background">只看这一层</button></div>
+  <div class="layer"><label><input type="checkbox" data-layer="curves" checked> 02 流动曲线</label><small>两条常驻；会话到 2 / 4 时分档增加到 4 / 6 条</small><button data-solo="curves">只看这一层</button></div>
+  <div class="layer"><label><input type="checkbox" data-layer="particles" checked> 03 漂浮光点</label><small>独立粒子、碎光与散景</small><button data-solo="particles">只看这一层</button></div>
+  <div class="layer"><label><input type="checkbox" data-layer="frame" checked> 04 外框与刻度</label><small>方向相反的标识线、额度环与行内刻线</small><button data-solo="frame">只看这一层</button></div>
+  <div class="layer"><label><input type="checkbox" data-layer="info" checked> 05 信息文字</label><small>纯色状态灯、固定左对齐名称与输出速度</small><button data-solo="info">只看这一层</button></div>
+  <div class="layer"><label><input type="checkbox" data-layer="glow" checked> 06 前景泛光</label><small>沿用文字色相、适量明度与彩度差</small><button data-solo="glow">只看这一层</button></div>
+</section>
+<div class="layer-actions"><button id="layers-all">恢复完整合成</button><span>取消勾选可逐层隐藏；“只看”用于辨认修改对象。</span></div>
+<div id="stage" data-bg="warm"><canvas id="panel" aria-label="悬浮窗合成预览"></canvas></div>
+<div id="stats" aria-live="polite">加载中…</div>
+<footer>快捷键 <kbd>Space</kbd> 启动 / 消散。曲线运动保留 0.4.8 特调长波；默认随模型状态自动平移、拉远和回近。<a href="../docs/图层定稿.md">主要图层与修改入口</a> · <a href="../docs/玻璃参数.md">玻璃参数表</a></footer>
+<script src="engine/core.js"></script>
+<script src="engine/presentation.js"></script>
+<script src="engine/status_palette.js"></script>
+<script src="engine/row_presentation.js"></script>
+<script src="engine/ribbon_art.js"></script>
+<script src="background/views.js"></script>
+<script src="background/engine/layout.js"></script><script src="background/engine/art.js"></script>
+<script src="background/engine/motion.js"></script><script src="background/engine/archive.js"></script>
+<script src="background/engine/roll.js"></script><script src="background/engine/switch_field.js"></script>
+<script src="background/engine/appearance.js"></script>
+<script src="background/engine/dynamics.js"></script>
+<script src="background/engine/geometry.js"></script><script src="background/engine/optical.js"></script>
+<script src="engine/glass_background.js"></script><script src="engine/layers.js"></script>
+<script src="engine/stage.js"></script>
+<script src="engine/hud_motion.js"></script>
+<script src="engine/flow.js"></script>
+<script src="engine/quota_motion.js"></script>
+<script src="engine/ribbons.js"></script>
+<script src="engine/animator.js"></script>
+<script src="engine/synthetic.js"></script>
+<script src="engine/atlas.js"></script>
+<script src="engine/gl.js"></script>
+<script src="engine/shaders/scene_lib.js"></script>
+<script src="engine/shaders/scene_layers.js"></script>
+<script src="engine/shaders/scene_hud.js"></script>
+<script src="engine/shaders/scene_rib.js"></script>
+<script src="engine/shaders/text.js"></script>
+<script src="engine/shaders/post.js"></script>
+<script src="engine/particles.js"></script>
+<script src="engine/labels.js"></script>
+<script src="engine/renderer.js"></script>
+<script src="engine/fallback.js"></script>
+<script src="engine/snapshot_feed.js"></script>
+<script src="engine/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "version": "0.4.9",
+  "id": "05",
+  "key": "info",
+  "name": {
+    "zh-CN": "信息文字",
+    "en": "Information text"
+  },
+  "preview": "media/layer-info.png",
+  "files": [
+    {
+      "path": "visual/engine/atlas.js",
+      "sha256": "14d1b52c8660025f6e22040bd1d42f3509034db0a3cbb2fffc7861c6d1364599"
+    },
+    {
+      "path": "visual/engine/hud_motion.js",
+      "sha256": "5c75074c88afaa80547ddb5d4902d502db057e33fedc2d261b445c06edfe4752"
+    },
+    {
+      "path": "visual/engine/labels.js",
+      "sha256": "f306cf2df3c9e84f91a1f3074ccbccd23561d4e44ede3c55ce01a5e3522daf60"
+    },
+    {
+      "path": "visual/engine/presentation.js",
+      "sha256": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605"
+    },
+    {
+      "path": "visual/engine/row_presentation.js",
+      "sha256": "bfc803d55c42dd53691edd0d5f5552c77ce0d50e26466be6ffa34c40f901ce3c"
+    },
+    {
+      "path": "visual/engine/shaders/scene_rib.js",
+      "sha256": "377ba7ca0cc8c6cdafefe3eff10eda47149ec154c4d9f41b1939f1fe25c8e4e1"
+    },
+    {
+      "path": "visual/engine/shaders/text.js",
+      "sha256": "98b005e6418f97e591197bf47c60c6bb18b004677d8e3e0d960909087340cced"
+    },
+    {
+      "path": "visual/engine/status_palette.js",
+      "sha256": "4562ce951680f7086fe1a2192e35848184e06b8934eb55858041aa4d656c6472"
+    }
+  ],
+  "sharedRuntime": "layers.lock.json"
+}

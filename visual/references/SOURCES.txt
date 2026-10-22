@@ -1,0 +1,5 @@
+RhineLabUI by 路北路陈 / LBEILC
+https://github.com/LBEILC/RhineLabUI
+Reference commit: ee5779741c6c0c916e416705fa634c7abf905c73
+MIT license: LICENSE.RhineLabUI.txt
+See ../../ACKNOWLEDGMENTS.md for bilingual attribution and scope.

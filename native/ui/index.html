@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Codex Observatory · 本地观察台</title><link rel="stylesheet" href="/style.css"><link rel="icon" href="data:,"></head>
+<body>
+<header class="topbar"><div class="brand"><span class="logo">◎</span><div>Codex <strong>Observatory</strong><small>本地观察台 <span id="version"></span></small></div></div><div class="top-actions"><span id="connection" class="status"><i></i>连接本地服务</span><button id="rescan" class="quiet">刷新索引</button><button id="shutdown" class="quiet danger">退出程序</button></div></header>
+<div id="demo-banner" hidden>演示模式 · 全部数值为合成测试数据，不代表你的账号。此模式禁止真实探针。</div>
+<div id="offline-banner" hidden></div>
+<div class="layout">
+<aside><div class="aside-head"><div class="eyebrow">SESSION EXPLORER</div><h2>会话</h2><div class="hint">选择观察对象，不自动判定当前主任务。</div></div><div class="search"><input id="search" placeholder="搜索模型、会话 ID、工作目录" aria-label="搜索会话"></div><div class="segmented"><button data-filter="all" class="chosen">全部</button><button data-filter="active">未归档</button><button data-filter="archived">归档</button></div><div id="session-list" class="session-list"><div class="empty small">正在读取本地索引…</div></div><footer class="aside-footer"><span id="scan-info">没有运行任何模型请求</span><div>页面关闭后继续采集。<br>从托盘或再次双击 exe 重新打开。</div></footer></aside>
+<main>
+<div class="main-heading"><div><div class="eyebrow">READ-ONLY TELEMETRY</div><h1 id="session-title">你的 Codex，留下可检查的记录。</h1><div id="session-meta" class="hint">本地记录 / 独立探针 / 人工判断，分别保存。</div></div><div class="heading-actions"><button id="pin">固定此会话</button><button id="export">导出证据</button><button id="mark" class="primary">我感觉这里不对</button></div></div>
+<nav class="tabs"><button data-tab="observe" class="active">观察</button><button data-tab="history">历史与标记</button><button data-tab="probe">独立路由检查 <span id="probe-dot"></span></button><button data-tab="settings">设置与检查</button></nav>
+<section id="observe" class="tab-panel active">
+<article class="card live-card"><div class="section-head"><div><h3>当前活动对话</h3><p>与悬浮窗使用同一份实时状态；点击对话可查看它的记录。</p></div><span id="live-bridge-state" class="chip subtle">等待接入</span></div><div id="live-weekly-quota" class="live-weekly"></div><div id="live-route-list">等待接收原请求证据。</div><div id="route-recording-state" class="subnote"></div><div class="card-foot">绿色表示请求与响应模型标签一致；新请求等待响应时保持待确认。服务端标签用于比较路由，不能认证模型权重。</div></article>
+<div id="root-warning" class="notice" hidden></div>
+<div class="scope-note"><span class="chip">本地证据</span><span>下方模型与推理档来自 rollout 记录，不是服务器权重认证。没有路由事件 ≠ 从未换路由。</span></div>
+<div id="empty-state" class="empty" hidden><h2>还没有发现会话记录</h2><p>打开“设置与检查”，填写实际 Codex Home，例如 <code>D:\OpenAI\CodexHome</code>。也可填写默认 <code>C:\Users\你的用户名\.codex</code>。</p><p>程序不会主动打开 Codex 或消耗模型额度。</p><button id="go-settings" class="primary">设置数据目录</button></div>
+<div id="metrics-content">
+<article class="card"><div class="section-head"><div><h3>所选对话 · 路由证据</h3><p>当前请求与最近保存的结果分别显示，历史结果不补到新请求中。</p></div><button id="go-route-history">查看路由历史</button></div><div id="selected-route"></div></article>
+<div class="metrics">
+<article class="card model-card"><div class="card-top"><span>本地会话设置</span><span class="chip subtle">LOCAL</span></div><div id="model" class="model-value">—</div><div class="model-details"><div><span>REASONING</span><b id="effort">—</b></div><div><span>客户端 SERVICE TIER</span><b id="tier">未记录</b></div></div><div id="model-source" class="card-foot">等待 turn_context</div><div id="tier-source" class="card-foot">等待客户端层级设置</div></article>
+<article class="card"><div class="card-top"><span>最近请求输入占窗</span><span class="chip subtle">估计</span></div><div id="context-percent" class="big-value">—</div><div class="bar"><i id="context-bar"></i></div><div id="context-detail" class="metric-description">等待 usage 与窗口大小</div><div class="card-foot">不是实时上下文填充量；压缩后等待新快照。</div></article>
+<article class="card"><div class="card-top"><span>最近 usage 快照</span></div><div id="latest-total" class="big-value">—</div><div id="latest-breakdown" class="metric-description">input / output / reasoning</div><div id="usage-at" class="card-foot">未知</div></article>
+</div>
+<div class="two-columns">
+<article class="card quota-card"><div class="section-head"><div><h3>所选对话的额度快照</h3><p>来自此对话的本地日志；按额度桶显示并标注快照时间。</p></div><span class="chip subtle">PASSIVE</span></div><div id="quotas" class="quotas"><div class="empty small">日志尚未记录额度。</div></div></article>
+<article class="card"><div class="section-head"><div><h3>累计报告快照</h3><p>直接读取客户端累计字段，不对快照重复求和。</p></div></div><div id="totals" class="stat-grid"></div><div class="subnote">reasoning 包含于 output，缓存包含于 input；不会二次加进总量。回滚、分叉或客户端重置可能改变累计口径。</div></article>
+</div>
+<div id="anomaly-summary" class="notice neutral">尚未观测到明确路由事件。这不构成“全部正常”的结论。</div>
+<article class="card timeline-card"><div class="section-head"><div><h3>最近事件</h3><p>设置变化、用量快照、压缩、工具调用与明确错误。</p></div><span id="event-count" class="hint"></span></div><div id="recent-events"></div></article>
+<details class="technical"><summary>数据来源与解析边界</summary><pre id="source-details"></pre></details>
+</div>
+</section>
+<section id="history" class="tab-panel"><div class="section-head"><div><h2>可回看的观测历史</h2><p>普通报告保留最近 5 天；明确路由异常永久保留。图表最多显示 1,200 条保留事件。</p></div><button id="history-refresh">更新记录</button></div><article class="card"><div class="section-head"><div><h3>原对话路由记录</h3><p id="route-history-caption">选择对话后读取已保存的请求与响应证据。</p></div><label class="route-samples-toggle"><input id="route-show-samples" type="checkbox">包含速度采样</label></div><div id="route-history-list" class="route-history-scroll"></div></article><div class="two-columns"><article class="card"><h3>最近请求输入 token</h3><p class="hint">来自 last_token_usage，不是累计输入或实时占窗。</p><div id="usage-chart" class="chart"></div></article><article class="card"><h3>主额度窗口 · 已用百分比</h3><p id="quota-chart-caption" class="hint">同一额度桶的被动快照。</p><div id="quota-chart" class="chart"></div></article></div><article class="card"><div class="section-head"><div><h3>人工异常标记</h3><p>人工标记保留 5 天；含明确路由异常证据的标记永久保留。</p></div></div><div id="marks"></div></article></section>
+<section id="probe" class="tab-panel">
+<div class="notice"><strong>这是另一次请求，不是正在运行的 Desktop 回合。</strong><p>仅在你确认后调用已登录的本机 Codex。可能包含预热和正式请求，会消耗额度；现有插件 / MCP 配置可能加载。默认不自动运行、不重试、不降推理档、不改系统代理或证书。</p></div>
+<article class="card"><div class="section-head"><div><h2>手动采样服务器响应标签</h2><p>采用接收侧 trace。拿不到支持的响应字段就记为“未观测到”，不猜测。</p></div><span class="chip">EXPERIMENTAL</span></div>
+<form id="probe-form"><div class="form-grid"><label class="wide">Codex 原生可执行文件<input id="probe-binary" list="binaries" placeholder="选择检测到的 codex.exe 或填写完整路径"><datalist id="binaries"></datalist></label><label class="wide">本次使用的 Codex Home<select id="probe-home"></select></label><label>请求模型（原字符串）<input id="probe-model" placeholder="从所选会话带入，不自动猜测"></label><label>推理档（原字符串）<input id="probe-effort" list="efforts" placeholder="例如 high / xhigh / ultra"><datalist id="efforts"><option value="minimal"><option value="low"><option value="medium"><option value="high"><option value="xhigh"><option value="max"><option value="ultra"></datalist></label><label>service_tier（可留空沿用配置）<input id="probe-tier" placeholder="不要把 Pro 订阅名称填在这里"></label><label>超时 / 自动重试<input value="240 秒 / 无自动重试" disabled></label></div>
+<label class="check-line"><input id="probe-confirm" type="checkbox">我理解这会使用模型额度，且结果不能回溯证明原 Desktop 回合的实际模型。</label><div class="form-actions"><button type="submit" id="probe-run" class="primary">执行一次检查</button><button type="button" id="probe-cancel" class="danger" hidden>取消并终止本次子进程</button><span class="hint">不提供行为 fingerprint，不自动 fork 原任务。</span></div></form></article>
+<article class="card"><h3>检查记录</h3><div id="probe-results"></div></article>
+</section>
+<section id="settings" class="tab-panel"><article class="card"><h2>只读数据源</h2><p class="hint">读取指定目录下的 sessions 与 archived_sessions。不会复制凭据、修改配置、触碰项目文件或自动扫描整个磁盘。</p><form id="settings-form"><label>Codex Home（每行一个；最多 8 个）<textarea id="roots" rows="4" placeholder="D:\OpenAI\CodexHome"></textarea></label><div class="form-grid"><label>扫描间隔（秒）<input id="poll-seconds" type="number" min="2" max="60" value="3"></label><label>优先使用的 codex.exe（可选）<input id="saved-binary" placeholder="留空则在检查页选择"></label></div><div class="form-actions"><button class="primary" type="submit">保存设置</button><button id="detect" type="button">重新发现候选路径</button></div></form><div id="suggestions" class="subnote"></div></article>
+<article class="card"><h2>本机检查与数据</h2><p id="data-path" class="code"></p><p id="retention-info" class="notice neutral">普通报告保留 5 天，明确路由异常永久归档；每分钟自动清理。</p><div class="form-actions"><button id="self-test">执行离线自检</button><button id="open-data">打开程序数据目录</button></div><pre id="self-test-result" class="test-result" hidden></pre><div class="subnote">本程序不自动安装依赖、不申请管理员权限、不设置开机启动、不自动更新。关闭页面后保持采集；通过页面右上角或托盘“退出”停止。</div></article>
+<article class="card boundary"><h3>数据与判断范围</h3><p>实时状态来自原 Desktop 请求的模型标签与回合事件；本地会话日志提供推理设置、用量与额度快照。缺字段、证据冲突、版本后缀或采集失效时保持待确认。模型标签不能认证后端权重与算力。</p><p>普通报告保留五天，明确模型标签不一致的路由异常永久保存。输出进度按采样保存，重复来源按记录 ID 去重。历史页按所选对话展示；导出同时包含原请求路由元数据。分享前请检查时间与响应标识。</p></article></section>
+<div class="bottom-line"><span>LOCAL FIRST · NO AUTOMATIC MODEL REQUESTS</span><span id="bottom-version"></span></div>
+</main></div>
+<dialog id="mark-dialog"><h2>记录这个时间点</h2><p>保存所选会话快照和附近事件。不运行模型检查。</p><textarea id="mark-note" rows="4" placeholder="可选：你感觉哪里发生了变化？"></textarea><div class="form-actions"><button id="mark-dismiss">取消</button><button id="mark-save" class="primary">保存标记</button></div></dialog>
+<dialog id="export-dialog"><h2>导出所选会话的证据包</h2><p>包含观测历史、关联探针、人工标记快照和 SHA-256 清单。不包含对话正文和凭据；默认隐藏路径、标题与备注。</p><label class="check-line"><input type="checkbox" id="export-notes">同时包含我写下的人工备注</label><div class="form-actions"><button id="export-dismiss">取消</button><button id="export-save" class="primary">生成 ZIP</button></div></dialog>
+<div id="toast" role="status" hidden></div><script src="/app.js"></script>
+</body></html>

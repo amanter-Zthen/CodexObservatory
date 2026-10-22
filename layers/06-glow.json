@@ -1,0 +1,33 @@
+{
+  "version": "0.4.9",
+  "id": "06",
+  "key": "glow",
+  "name": {
+    "zh-CN": "前景泛光",
+    "en": "Foreground bloom"
+  },
+  "preview": "media/layer-glow.png",
+  "files": [
+    {
+      "path": "visual/engine/presentation.js",
+      "sha256": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605"
+    },
+    {
+      "path": "visual/engine/renderer.js",
+      "sha256": "926c07cdaf08b10194cd4bf832fb9e634058efa082a2452b05ee30a2411031af"
+    },
+    {
+      "path": "visual/engine/shaders/post.js",
+      "sha256": "1cf18ed42f6f5df01d6c717722d4a16400eff31ee102f437811108512b2979e4"
+    },
+    {
+      "path": "visual/engine/shaders/scene_rib.js",
+      "sha256": "377ba7ca0cc8c6cdafefe3eff10eda47149ec154c4d9f41b1939f1fe25c8e4e1"
+    },
+    {
+      "path": "visual/engine/shaders/scene_layers.js",
+      "sha256": "0f4d47ce3ecc1b608d62be49b01ecd134b7e794e39d6c7e72e7c3e1f97419cb1"
+    }
+  ],
+  "sharedRuntime": "layers.lock.json"
+}

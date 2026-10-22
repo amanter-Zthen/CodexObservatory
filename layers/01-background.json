@@ -1,0 +1,69 @@
+{
+  "version": "0.4.9",
+  "id": "01",
+  "key": "background",
+  "name": {
+    "zh-CN": "玻璃背景",
+    "en": "Glass background"
+  },
+  "preview": "media/layer-background.png",
+  "files": [
+    {
+      "path": "visual/engine/glass_background.js",
+      "sha256": "4ae61eb93fbaac561024fd37f66b70776a302b166074d635b26b0a5456cb7678"
+    },
+    {
+      "path": "visual/engine/presentation.js",
+      "sha256": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605"
+    },
+    {
+      "path": "visual/engine/shaders/scene_layers.js",
+      "sha256": "0f4d47ce3ecc1b608d62be49b01ecd134b7e794e39d6c7e72e7c3e1f97419cb1"
+    },
+    {
+      "path": "visual/background/engine/appearance.js",
+      "sha256": "a5891e194d3ea01d0e67a916208fa64e18929743c0607684198ee8514c0c989a"
+    },
+    {
+      "path": "visual/background/engine/archive.js",
+      "sha256": "1ec85add87d23cac179b90dbd837428a5b65f10371b63cc1f14977e09a18b8db"
+    },
+    {
+      "path": "visual/background/engine/art.js",
+      "sha256": "94cc820e408655f0f7cbca1572d0ebbd7f83d320b5ac5b67bff5a159283dd5bc"
+    },
+    {
+      "path": "visual/background/engine/dynamics.js",
+      "sha256": "bd39d86347e98cbc062ad4aa530a9287c03ba166d5423f2b9a60a8708cc53171"
+    },
+    {
+      "path": "visual/background/engine/geometry.js",
+      "sha256": "c57b418737af09ff331f4fe9f190d541c2247c829d2cf623918f8d02625ec6d7"
+    },
+    {
+      "path": "visual/background/engine/layout.js",
+      "sha256": "575afd177116e0c2e6ed960da1a91c088409e42c1b5e69384a8bd290a37afc74"
+    },
+    {
+      "path": "visual/background/engine/motion.js",
+      "sha256": "95961b44b1533a33102286453463f42161e45b2591645ac97434da1f286de479"
+    },
+    {
+      "path": "visual/background/engine/optical.js",
+      "sha256": "b99abe34074726bb8589d62c8766dc4e1130b3ce299cb40f48ccac305461afa7"
+    },
+    {
+      "path": "visual/background/engine/roll.js",
+      "sha256": "1b09b9ccda1c04b1a0db0a395f616b06dbce3ba5645d5d8c69eeb7b46a46a70d"
+    },
+    {
+      "path": "visual/background/engine/switch_field.js",
+      "sha256": "c8c6f44875b2c13bc1b4c4ab96dcd722d9e24016f6840fa9bb258dd5c76023b8"
+    },
+    {
+      "path": "visual/background/views.js",
+      "sha256": "0a597d32b19d67d1e96f4ba00d6ea5514e7e433369599ed4a73995059ca3c38c"
+    }
+  ],
+  "sharedRuntime": "layers.lock.json"
+}

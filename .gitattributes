@@ -1,0 +1,2 @@
+# SHA-256 source manifests cover exact bytes. Preserve line endings on every platform.
+* -text

@@ -1,0 +1,33 @@
+{
+  "version": "0.4.9",
+  "id": "04",
+  "key": "frame",
+  "name": {
+    "zh-CN": "外框与刻度",
+    "en": "Frame guides"
+  },
+  "preview": "media/layer-frame.png",
+  "files": [
+    {
+      "path": "visual/engine/hud_motion.js",
+      "sha256": "5c75074c88afaa80547ddb5d4902d502db057e33fedc2d261b445c06edfe4752"
+    },
+    {
+      "path": "visual/engine/presentation.js",
+      "sha256": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605"
+    },
+    {
+      "path": "visual/engine/quota_motion.js",
+      "sha256": "2ef81c507f35b586fa2fc77c46afd668c9e6b2fb0ceb2dfa6e6508eff9c9deea"
+    },
+    {
+      "path": "visual/engine/shaders/scene_hud.js",
+      "sha256": "ed36a84bb9aeb9d66e9eab9db81272020daaeb11631a6bf2774d05d7a6c2d96f"
+    },
+    {
+      "path": "visual/engine/shaders/scene_layers.js",
+      "sha256": "0f4d47ce3ecc1b608d62be49b01ecd134b7e794e39d6c7e72e7c3e1f97419cb1"
+    }
+  ],
+  "sharedRuntime": "layers.lock.json"
+}

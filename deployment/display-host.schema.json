@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codex Observatory display host selection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["enabled", "executable", "state", "sha256"],
+  "properties": {
+    "enabled": {"type": "boolean"},
+    "executable": {"type": "string", "maxLength": 2048, "description": "Canonical absolute drive-letter path to a local .exe, distinct from the backend executable. UTF16 limit is checked at runtime."},
+    "state": {"type": "string", "maxLength": 2048, "description": "Canonical absolute drive-letter directory path. Existing regular files, UNC paths, dot segments and alternate streams are rejected."},
+    "sha256": {"type": "string", "pattern": "^[0-9A-Fa-f]{64}$"}
+  }
+}

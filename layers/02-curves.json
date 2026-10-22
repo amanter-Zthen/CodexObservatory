@@ -1,0 +1,29 @@
+{
+  "version": "0.4.9",
+  "id": "02",
+  "key": "curves",
+  "name": {
+    "zh-CN": "流动曲线",
+    "en": "Flowing ribbons"
+  },
+  "preview": "media/layer-curves.png",
+  "files": [
+    {
+      "path": "visual/engine/flow.js",
+      "sha256": "894a9e5230a8123f73066020c1464ec990d9fff4228631b2ef9954f20614ad1b"
+    },
+    {
+      "path": "visual/engine/ribbon_art.js",
+      "sha256": "5440fc21bd206dbe8ed3cbe210ffb78cf4f6e230ad7981fc51be028f6badcabd"
+    },
+    {
+      "path": "visual/engine/ribbons.js",
+      "sha256": "9680b9cb67cfa36c4b64d09c3f18a46112c8741c262704ff350084c6517d4359"
+    },
+    {
+      "path": "visual/engine/shaders/scene_rib.js",
+      "sha256": "377ba7ca0cc8c6cdafefe3eff10eda47149ec154c4d9f41b1939f1fe25c8e4e1"
+    }
+  ],
+  "sharedRuntime": "layers.lock.json"
+}

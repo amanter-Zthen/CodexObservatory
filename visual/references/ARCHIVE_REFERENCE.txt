@@ -1,0 +1,6 @@
+RhineLabUI: https://github.com/LBEILC/RhineLabUI
+Frozen commit: ee5779741c6c0c916e416705fa634c7abf905c73
+MIT, Copyright (c) 2026 LBEILC. Full license included.
+Archive transition inspiration: motion.ts damp, archive-loop.ts.
+The schedule, bounded allocation and gain tuning are implemented in this art study.
+Current parameter index: ../../docs/玻璃参数.md.

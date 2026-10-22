@@ -1,0 +1,216 @@
+{
+  "source": "native/internal/floatui/project.go",
+  "sourceSHA256": "d278ed900996a659f0b2e5e41c3982f22d5cd55585d2c81da7d65569ee98dc2c",
+  "structs": {
+    "Snapshot": [
+      {
+        "goField": "PendingCompleted",
+        "goType": "int",
+        "json": "pending_completed",
+        "omitempty": false
+      },
+      {
+        "goField": "Mode",
+        "goType": "string",
+        "json": "mode",
+        "omitempty": false
+      },
+      {
+        "goField": "Revision",
+        "goType": "uint64",
+        "json": "revision",
+        "omitempty": false
+      },
+      {
+        "goField": "At",
+        "goType": "time.Time",
+        "json": "at",
+        "omitempty": false
+      },
+      {
+        "goField": "Rows",
+        "goType": "[]Row",
+        "json": "rows",
+        "omitempty": false
+      },
+      {
+        "goField": "Quota",
+        "goType": "QuotaView",
+        "json": "quota",
+        "omitempty": false
+      },
+      {
+        "goField": "Ready",
+        "goType": "bool",
+        "json": "ready",
+        "omitempty": false
+      },
+      {
+        "goField": "Diagnostics",
+        "goType": "Diagnostics",
+        "json": "diagnostics",
+        "omitempty": false
+      }
+    ],
+    "Row": [
+      {
+        "goField": "Thread",
+        "goType": "string",
+        "json": "thread_id",
+        "omitempty": false
+      },
+      {
+        "goField": "Turn",
+        "goType": "string",
+        "json": "turn_id",
+        "omitempty": false
+      },
+      {
+        "goField": "Response",
+        "goType": "string",
+        "json": "response_id",
+        "omitempty": true
+      },
+      {
+        "goField": "Model",
+        "goType": "string",
+        "json": "model",
+        "omitempty": false
+      },
+      {
+        "goField": "Requested",
+        "goType": "string",
+        "json": "requested_model",
+        "omitempty": false
+      },
+      {
+        "goField": "Reported",
+        "goType": "string",
+        "json": "reported_model",
+        "omitempty": true
+      },
+      {
+        "goField": "Route",
+        "goType": "Route",
+        "json": "route",
+        "omitempty": false
+      },
+      {
+        "goField": "Color",
+        "goType": "Color",
+        "json": "color",
+        "omitempty": false
+      },
+      {
+        "goField": "Activity",
+        "goType": "Activity",
+        "json": "activity",
+        "omitempty": false
+      },
+      {
+        "goField": "Speed",
+        "goType": "string",
+        "json": "speed",
+        "omitempty": false
+      },
+      {
+        "goField": "TokenRate",
+        "goType": "float64",
+        "json": "tokens_per_second",
+        "omitempty": true
+      },
+      {
+        "goField": "SpeedValid",
+        "goType": "bool",
+        "json": "speed_valid",
+        "omitempty": false
+      },
+      {
+        "goField": "SpeedFresh",
+        "goType": "bool",
+        "json": "speed_fresh",
+        "omitempty": false
+      },
+      {
+        "goField": "OutputActivity",
+        "goType": "float64",
+        "json": "output_activity",
+        "omitempty": true
+      },
+      {
+        "goField": "Anomaly",
+        "goType": "bool",
+        "json": "turn_anomaly",
+        "omitempty": false
+      },
+      {
+        "goField": "HealthValid",
+        "goType": "bool",
+        "json": "health_valid",
+        "omitempty": false
+      },
+      {
+        "goField": "Started",
+        "goType": "time.Time",
+        "json": "started_at",
+        "omitempty": false
+      },
+      {
+        "goField": "Ended",
+        "goType": "time.Time",
+        "json": "ended_at",
+        "omitempty": true
+      },
+      {
+        "goField": "Outputting",
+        "goType": "bool",
+        "json": "outputting",
+        "omitempty": false
+      },
+      {
+        "goField": "EstimatedTokenRate",
+        "goType": "float64",
+        "json": "estimated_visible_tokens_per_second",
+        "omitempty": true
+      },
+      {
+        "goField": "ActivityScope",
+        "goType": "string",
+        "json": "activity_scope",
+        "omitempty": false
+      }
+    ],
+    "QuotaView": [
+      {
+        "goField": "Known",
+        "goType": "bool",
+        "json": "known",
+        "omitempty": false
+      },
+      {
+        "goField": "Fresh",
+        "goType": "bool",
+        "json": "fresh",
+        "omitempty": false
+      },
+      {
+        "goField": "Remaining",
+        "goType": "float64",
+        "json": "remaining_percent",
+        "omitempty": false
+      },
+      {
+        "goField": "Bucket",
+        "goType": "string",
+        "json": "bucket",
+        "omitempty": true
+      },
+      {
+        "goField": "At",
+        "goType": "time.Time",
+        "json": "at",
+        "omitempty": true
+      }
+    ]
+  }
+}

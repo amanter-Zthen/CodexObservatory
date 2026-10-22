@@ -1,0 +1,150 @@
+{
+  "version": "0.4.9",
+  "approvedBaseline": "G02-BG10",
+  "runtimeHashes": {
+    "background/engine/appearance.js": "a5891e194d3ea01d0e67a916208fa64e18929743c0607684198ee8514c0c989a",
+    "background/engine/archive.js": "1ec85add87d23cac179b90dbd837428a5b65f10371b63cc1f14977e09a18b8db",
+    "background/engine/art.js": "94cc820e408655f0f7cbca1572d0ebbd7f83d320b5ac5b67bff5a159283dd5bc",
+    "background/engine/dynamics.js": "bd39d86347e98cbc062ad4aa530a9287c03ba166d5423f2b9a60a8708cc53171",
+    "background/engine/geometry.js": "c57b418737af09ff331f4fe9f190d541c2247c829d2cf623918f8d02625ec6d7",
+    "background/engine/layout.js": "575afd177116e0c2e6ed960da1a91c088409e42c1b5e69384a8bd290a37afc74",
+    "background/engine/motion.js": "95961b44b1533a33102286453463f42161e45b2591645ac97434da1f286de479",
+    "background/engine/optical.js": "b99abe34074726bb8589d62c8766dc4e1130b3ce299cb40f48ccac305461afa7",
+    "background/engine/roll.js": "1b09b9ccda1c04b1a0db0a395f616b06dbce3ba5645d5d8c69eeb7b46a46a70d",
+    "background/engine/switch_field.js": "c8c6f44875b2c13bc1b4c4ab96dcd722d9e24016f6840fa9bb258dd5c76023b8",
+    "background/views.js": "0a597d32b19d67d1e96f4ba00d6ea5514e7e433369599ed4a73995059ca3c38c",
+    "engine/animator.js": "d505a6273df05fbd4f61d52efbefafd7b25e895e00fbde569be5157e38a8cff0",
+    "engine/app.js": "4734c7702467808fb364859fed177e7d8dca6c8a3d12c3fc6ae7714f612578ba",
+    "engine/atlas.js": "14d1b52c8660025f6e22040bd1d42f3509034db0a3cbb2fffc7861c6d1364599",
+    "engine/core.js": "cb14165a3ef5120ac2d7add3dcf22a412f93d27b57c90f8a67320534fe595be2",
+    "engine/fallback.js": "df474e0f8613d2042bfc9c31de97ccce9f71963aa9d7dbda226a51f1c04466bc",
+    "engine/flow.js": "894a9e5230a8123f73066020c1464ec990d9fff4228631b2ef9954f20614ad1b",
+    "engine/gl.js": "43d677b76f7ea7aca4a79fc041d8ddf5f1033657a221f3b0ad31839b56c3d49f",
+    "engine/glass_background.js": "4ae61eb93fbaac561024fd37f66b70776a302b166074d635b26b0a5456cb7678",
+    "engine/hud_motion.js": "5c75074c88afaa80547ddb5d4902d502db057e33fedc2d261b445c06edfe4752",
+    "engine/labels.js": "f306cf2df3c9e84f91a1f3074ccbccd23561d4e44ede3c55ce01a5e3522daf60",
+    "engine/layers.js": "41c4dbf3450db5095af1fa9cdaced4748e4b67e72fb65d967af865125de19daa",
+    "engine/particles.js": "99859d13ed455c10f3817ece3ec76128b02e2177eb0414aac56c867526f52b60",
+    "engine/presentation.js": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605",
+    "engine/quota_motion.js": "2ef81c507f35b586fa2fc77c46afd668c9e6b2fb0ceb2dfa6e6508eff9c9deea",
+    "engine/renderer.js": "926c07cdaf08b10194cd4bf832fb9e634058efa082a2452b05ee30a2411031af",
+    "engine/ribbons.js": "9680b9cb67cfa36c4b64d09c3f18a46112c8741c262704ff350084c6517d4359",
+    "engine/ribbon_art.js": "5440fc21bd206dbe8ed3cbe210ffb78cf4f6e230ad7981fc51be028f6badcabd",
+    "engine/row_presentation.js": "bfc803d55c42dd53691edd0d5f5552c77ce0d50e26466be6ffa34c40f901ce3c",
+    "engine/shaders/post.js": "1cf18ed42f6f5df01d6c717722d4a16400eff31ee102f437811108512b2979e4",
+    "engine/shaders/scene_hud.js": "ed36a84bb9aeb9d66e9eab9db81272020daaeb11631a6bf2774d05d7a6c2d96f",
+    "engine/shaders/scene_layers.js": "0f4d47ce3ecc1b608d62be49b01ecd134b7e794e39d6c7e72e7c3e1f97419cb1",
+    "engine/shaders/scene_lib.js": "2979c217e733c240dcd3cc1a2555df507944c971b8f68173c225df7796360418",
+    "engine/shaders/scene_rib.js": "377ba7ca0cc8c6cdafefe3eff10eda47149ec154c4d9f41b1939f1fe25c8e4e1",
+    "engine/shaders/text.js": "98b005e6418f97e591197bf47c60c6bb18b004677d8e3e0d960909087340cced",
+    "engine/snapshot_feed.js": "4a39711a94cf49b57188dd5bbfe9969dc9b429aee9fd95a61ae521b5df4b0cc7",
+    "engine/stage.js": "040899cfa53ad4e8578e8f26b3e1a62c53acf46768d682cf6cc6049b38bbd6b3",
+    "engine/status_palette.js": "4562ce951680f7086fe1a2192e35848184e06b8934eb55858041aa4d656c6472",
+    "engine/synthetic.js": "31ab24b842abf80d96c87de61a911749c937f76cd02978a18823cee98a329070"
+  },
+  "layers": [
+    {
+      "id": "01",
+      "name": "玻璃背景",
+      "version": "0.4.9",
+      "files": [
+        "engine/glass_background.js",
+        "engine/presentation.js",
+        "engine/shaders/scene_layers.js",
+        "background/engine/appearance.js",
+        "background/engine/archive.js",
+        "background/engine/art.js",
+        "background/engine/dynamics.js",
+        "background/engine/geometry.js",
+        "background/engine/layout.js",
+        "background/engine/motion.js",
+        "background/engine/optical.js",
+        "background/engine/roll.js",
+        "background/engine/switch_field.js",
+        "background/views.js"
+      ]
+    },
+    {
+      "id": "02",
+      "name": "流动曲线",
+      "version": "0.4.9",
+      "files": [
+        "engine/flow.js",
+        "engine/ribbon_art.js",
+        "engine/ribbons.js",
+        "engine/shaders/scene_rib.js"
+      ]
+    },
+    {
+      "id": "03",
+      "name": "漂浮光点",
+      "version": "0.4.9",
+      "files": [
+        "engine/particles.js",
+        "engine/shaders/post.js",
+        "engine/shaders/scene_layers.js"
+      ]
+    },
+    {
+      "id": "04",
+      "name": "外框与刻度",
+      "version": "0.4.9",
+      "files": [
+        "engine/hud_motion.js",
+        "engine/presentation.js",
+        "engine/quota_motion.js",
+        "engine/shaders/scene_hud.js",
+        "engine/shaders/scene_layers.js"
+      ]
+    },
+    {
+      "id": "05",
+      "name": "信息文字",
+      "version": "0.4.9",
+      "files": [
+        "engine/atlas.js",
+        "engine/hud_motion.js",
+        "engine/labels.js",
+        "engine/presentation.js",
+        "engine/row_presentation.js",
+        "engine/shaders/scene_rib.js",
+        "engine/shaders/text.js",
+        "engine/status_palette.js"
+      ]
+    },
+    {
+      "id": "06",
+      "name": "前景泛光",
+      "version": "0.4.9",
+      "files": [
+        "engine/presentation.js",
+        "engine/renderer.js",
+        "engine/shaders/post.js",
+        "engine/shaders/scene_rib.js",
+        "engine/shaders/scene_layers.js"
+      ]
+    }
+  ],
+  "sharedFiles": "Shared compositing, timeline and parameters are locked with the same project version.",
+  "engineeringRevision": "0.4.9-engineering.1",
+  "shellRevision": "0.4.9-shell.1",
+  "lastVisualAdjustment": {
+    "at": "2026-10-23T03:06:50.497105+08:00",
+    "description": "128 DIP render space with 120 DIP smooth tail; rich moving and shimmering text light; 0.4.8 rate tween and per-frame digits; automatic camera and bounded preparation",
+    "files": [
+      "engine/animator.js",
+      "engine/app.js",
+      "engine/glass_background.js",
+      "engine/labels.js",
+      "engine/presentation.js",
+      "engine/renderer.js",
+      "engine/shaders/post.js",
+      "engine/shaders/scene_layers.js",
+      "engine/shaders/scene_rib.js",
+      "engine/shaders/text.js",
+      "engine/row_presentation.js"
+    ],
+    "versionStrategy": "Overwrite the current fixed 0.4.9 six-layer project"
+  },
+  "previewHtmlSha256": "1fc219c53b27ee5c2f2e4bf4b21919aaf4245fce78a027c56df42099da4e955a"
+}

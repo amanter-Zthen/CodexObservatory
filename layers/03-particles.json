@@ -1,0 +1,25 @@
+{
+  "version": "0.4.9",
+  "id": "03",
+  "key": "particles",
+  "name": {
+    "zh-CN": "漂浮光点",
+    "en": "Floating particles"
+  },
+  "preview": "media/layer-particles.png",
+  "files": [
+    {
+      "path": "visual/engine/particles.js",
+      "sha256": "99859d13ed455c10f3817ece3ec76128b02e2177eb0414aac56c867526f52b60"
+    },
+    {
+      "path": "visual/engine/shaders/post.js",
+      "sha256": "1cf18ed42f6f5df01d6c717722d4a16400eff31ee102f437811108512b2979e4"
+    },
+    {
+      "path": "visual/engine/shaders/scene_layers.js",
+      "sha256": "0f4d47ce3ecc1b608d62be49b01ecd134b7e794e39d6c7e72e7c3e1f97419cb1"
+    }
+  ],
+  "sharedRuntime": "layers.lock.json"
+}

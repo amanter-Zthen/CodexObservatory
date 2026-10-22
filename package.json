@@ -1,0 +1,22 @@
+{
+  "name": "codex-observatory",
+  "version": "0.4.9",
+  "private": true,
+  "description": "Six-layer Windows floating observatory for Codex routing state",
+  "scripts": {
+    "test": "node tests/run.cjs",
+    "test:engineering": "node tests/verify-engineering.cjs",
+    "test:current": "node tests/verify-current-visual.cjs",
+    "test:controls": "node tests/verify-desktop-controls.cjs",
+    "test:stress": "node tests/verify-runtime-stress.cjs",
+    "build:backend": "node deployment/build-overlay.cjs",
+    "package": "node tools/package-release.cjs",
+    "render:demo": "node tools/render-public-demo.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

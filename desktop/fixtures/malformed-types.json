@@ -1,0 +1,12 @@
+{
+  "mode": "synthetic",
+  "ready": false,
+  "revision": 1,
+  "at": "2026-10-21T00:00:00Z",
+  "quota": {"known": false, "fresh": false, "remaining_percent": 0},
+  "rows": [
+    {"thread_id": "fixture-type-1", "model": 42, "speed": {"unexpected": true}, "color": false},
+    {"thread_id": "fixture-type-2", "model": null, "speed": [], "color": "yellow"},
+    null
+  ]
+}
