@@ -41,7 +41,7 @@
         let p = this.poses.get(id);
         if (!p) {
           p = { id, seed: strHash(id), admitted:false, born: this.t, gone: -1, returnAt:0, returnFrom:0, y: new Spring(y + 7, 1.5, 0.92), font: new Spring(L.font * 0.94, 1.2, 1),
-            rate: new NS.RateTween(), rowMotion:new NS.RowMotion(strHash(id)), mix: new Spring(1, 2.2, 1), env: new Envelope(11, 2.6),outputLight:new Envelope(8,4),lightPhase:strHash(id),
+            rate: new NS.RateTween(),throughput:new NS.HybridRate(strHash(id)),rateTargetAt:-1,rateSource:'none', rowMotion:new NS.RowMotion(strHash(id)), mix: new Spring(1, 2.2, 1), env: new Envelope(11, 2.6),outputLight:new Envelope(8,4),lightPhase:strHash(id),
             model:row.model,pendingModel:null,retiring:false,nameReady:0,prev:'',rateText:'',rateAt:-1 };
           this.poses.set(id, p);
         }
@@ -49,9 +49,8 @@
         if(p.gone>=0){p.returnFrom=localDissolve(p,this.t);p.returnAt=this.t;p.gone=-1;}
         p.row = row; p.index = i; p.retiring=false;
         p.y.set(y); p.font.set(L.font);
-        let rate = row.estimated_visible_tokens_per_second || 0;
-        if (rate <= 0 && row.outputting) rate = (row.output_activity || 0) * 0.4;
-        let show = !!row.outputting && rate > 0;
+        const throughput=p.throughput.accept(row,s.ready!==false);
+        let rate=throughput.rate,show=throughput.show;
         // A completed response can contain the first accurate speed sample.
         // Accept each fresh response sample once; a finite presentation latch
         // lets the complete name enter before opening, without renewing on replay.
@@ -68,7 +67,8 @@
           rate=p.completion.rate;show=true;
         }
         show=show&&Number.isFinite(rate);
-        if (show) p.rate.set(Math.min(999, rate),this.t);
+        if (show){p.rate.set(Math.min(999,rate),this.t);p.rateTargetAt=this.t;}
+        p.rateSource=throughput.source;
         p.rowMotion.setOutput(show); p.show = show; p.rawRate = Number.isFinite(rate)?rate:0;
       }
       // Only admitted rows own exit clips. Unseen intermediate snapshots are
@@ -123,11 +123,27 @@
         if(p.completion&&(t>=p.completion.until||p.completion.shown>=1.1)){
           p.completion=null;if(!p.row.outputting){p.show=false;p.rowMotion.setOutput(false);}
         }
+        const throughput=p.throughput.step(motionDt,still);
+        if(throughput.show&&!p.retiring){
+          // Token display motion is local: reuse the presented-frame clock and
+          // existing tween, with at most ten target changes/second per row.
+          if(throughput.source!==p.rateSource||t-p.rateTargetAt>=.1){p.rate.set(Math.min(999,throughput.rate),t);p.rateTargetAt=t;}
+          p.show=true;p.rawRate=throughput.rate;p.rowMotion.setOutput(true);
+        }else if(!p.completion){p.show=false;p.rowMotion.setOutput(false);}
+        p.rateSource=throughput.source;
         const r = p.row, out = r.outputting ? 0.32 + 0.68 * clamp01(p.rawRate / 42) : r.activity === 'running' ? 0.1 : 0;
         const e = p.env.step(p.retiring ? 0 : out, dt); eMax = Math.max(eMax, e); eSum += e;
         const y = p.y.step(dt), font = p.font.step(dt), rate = p.rate.step(t);
-        const outputLight=p.outputLight.step(r.outputting&&!p.retiring?1:0,dt);
-        p.lightPhase=(p.lightPhase+motionDt*(P.outputTextFlowTurns+.20*clamp01(rate/60)))%1;
+        // Ordinary token motion uses the same text/glow channel as visible
+        // writing. Select a band from the measured anchor, not the display wave.
+        const tokenLight=throughput.source==='token'&&r.activity==='running'&&p.show;
+        const anchor=throughput.anchor,bands=P.tokenTextSpeedBands;
+        const lightTier=tokenLight?(anchor<bands[0]?0:anchor<bands[1]?1:anchor<bands[2]?2:3):-1;
+        const writing=r.outputting&&throughput.healthy;
+        const lightTarget=p.retiring?0:writing?1:lightTier>=0?P.tokenTextLightLevels[lightTier]:0;
+        const outputLight=p.outputLight.step(lightTarget,dt);
+        const lightTurns=!writing&&lightTier>=0?P.tokenTextFlowTurns[lightTier]:P.outputTextFlowTurns+.20*clamp01(rate/60);
+        p.lightPhase=(p.lightPhase+motionDt*lightTurns)%1;
         if (t - p.rateAt > P.rateRefresh) {
           const digit=Math.round(rate*10);if(digit!==p.rateDigit){p.rateDigit=digit;p.rateText=(digit/10).toFixed(1);}p.rateAt=t;
         }
@@ -156,7 +172,7 @@
         if(still&&p.pendingModel){p.prev='';p.model=p.pendingModel;p.pendingModel=null;p.mix.snap(1);}
         const dissolve = still?0:Math.max(localDissolve(p,t), clamp01((T.rowsOut-stagger)/(1-stagger)));
         rows.push({ id, model: p.model, prev: p.prev, mix:p.mix.x, color: r.color, activity: r.activity, y, font,
-          reveal, dissolve, rate, rateText: p.rateText, rateOp, orbAngle:p.rowMotion.angle, energy: e, seed: p.seed,outputLight,lightPhase:p.lightPhase });
+          reveal, dissolve, rate, rateText: p.rateText, rateSource:p.rateSource,tokenAnchor:p.throughput.anchor, rateOp, orbAngle:p.rowMotion.angle, energy: e, seed: p.seed,outputLight,lightPhase:p.lightPhase,lightTier });
         ribRows.push({ id, y, font, energy: e, rate: p.rawRate, outputting: !!r.outputting, alive: p.gone < 0 });
       }
       if(![...this.poses.values()].some(p=>p.retiring))this.H.set(this.layout.H);

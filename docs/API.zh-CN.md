@@ -172,7 +172,7 @@ HTTP 200 和 `accepted:true` 表示请求被接受，不保证已经取得新响
 
 运行估值来自实际可见文字增量：ASCII 字符约 0.25 单位、汉字等约 1 单位、其他字符约 0.5 单位，采集输出至少间隔约 200ms 发布。没有该估值时，显示可使用 `output_activity × 0.4`。这不是服务 tokenization 或计费读数。
 
-完成测量使用有效 `output_tokens / elapsed_seconds`，结合响应关联和时间覆盖判定 `speed_valid`；`speed_fresh` 另行控制尾显时效。显示采用 0.65 秒有界切线插值，每个已呈现帧按一位小数更新；插值不会回写原始接口值，也不会添加随机数字。稳定观测值可以稳定显示，无输出时不会假造持续输出。
+完成测量继续使用有效 output_tokens / elapsed_seconds，speed_valid 与 speed_fresh 的接口语义不变。r2 显示在可见文字期间用原估算大数值覆盖，空档保留当前轮次最近的有效 token 样本；running 时允许约 ±11% 的确定性装饰波动，tool_wait 保持样本值。0.65 秒插值衔接两种来源，不回写原始接口值。新回合、换模型或离线清除行内采样记忆，完成仍使用原有限尾显；装饰变化不是逐 token 测量。
 
 网页接收层保留一个最新快照槽，校验 generation、sequence 和源时间顺序。接收年龄或 Snapshot.at 年龄超过 10 秒时，将状态改为未就绪、行标黄、`outputting=false`、`speed_fresh=false`、额度过期。重复读取或延迟投递不能刷新旧源证据。
 

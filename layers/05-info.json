@@ -22,11 +22,11 @@
     },
     {
       "path": "visual/engine/presentation.js",
-      "sha256": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605"
+      "sha256": "07b1f55a1001fe962b3125d04d0ab7374b3f6352c273d8f889d5915613e144dc"
     },
     {
       "path": "visual/engine/row_presentation.js",
-      "sha256": "bfc803d55c42dd53691edd0d5f5552c77ce0d50e26466be6ffa34c40f901ce3c"
+      "sha256": "0e61f019cd4c77fa3e18c7e1ec5f434268b2c873b0ae847eb9ab3aa96ab80773"
     },
     {
       "path": "visual/engine/shaders/scene_rib.js",

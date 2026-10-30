@@ -16,7 +16,8 @@ const hash=data=>crypto.createHash('sha256').update(data).digest('hex');
 const fileHash=p=>hash(fs.readFileSync(p));
 function treeHashes(){return release.hashFiles(project,release.walk(project,'native'));}
 const overlayNames=['display_host_windows.go','display_host_windows_test.go','display_controls_windows.go','display_controls_windows_test.go','route_pulse_windows.go','route_pulse_windows_test.go','startup_visibility_windows_test.go'];
-const sourceInputs=['deployment/build-overlay.cjs','deployment/native-source-manifest.json','tools/release-common.cjs',...overlayNames.map(file=>'deployment/overlay/'+file)];
+const collectorNames=['native_trust_windows.go','native_trust_windows_test.go'];
+const sourceInputs=['deployment/build-overlay.cjs','deployment/native-source-manifest.json','tools/release-common.cjs',...overlayNames.map(file=>'deployment/overlay/'+file),...collectorNames.map(file=>'deployment/collector/'+file)];
 const relative=p=>path.relative(project,p).replaceAll('\\','/');
 const report={formatVersion:1,kind:'codex-observatory-backend-build',started:new Date().toISOString(),binary:relative(binary),nativeBaseline:'0.4.8-nacre',
  parameters:{goSelection:process.env.OBSERVATORY_GO?'OBSERVATORY_GO':'PATH',cacheSelection:cache?'OBSERVATORY_GO_CACHE':'Go default or inherited GOCACHE',goos:'windows',goarch:'amd64',moduleMode:'vendor',toolchain:'local',cgo:false,productionMutation:'NONE'},
@@ -105,6 +106,13 @@ try{
  for(const file of overlayNames){
   overlay.Replace[path.join(native,'zz_'+file)]=path.join(__dirname,'overlay',file);
  }
+ const launcherSource=path.join(native,'cmd','codex-observed-launcher','native_home_windows.go');
+ const launcherProjected=path.join(generated,'native_home_windows.go');
+ fs.writeFileSync(launcherProjected,renameOnce(fs.readFileSync(launcherSource,'utf8'),'os.WriteFile(certPath, ca, 0600)','writeNativeTrustBundle(certPath, ca)'));
+ overlay.Replace[launcherSource]=launcherProjected;
+ for(const file of collectorNames){
+  overlay.Replace[path.join(native,'cmd','codex-observed-launcher','zz_'+file)]=path.join(__dirname,'collector',file);
+ }
  const overlayPath=path.join(build,'overlay.json');
  fs.writeFileSync(overlayPath,JSON.stringify(overlay,null,2));
  report.overlay=relative(overlayPath);
@@ -117,11 +125,17 @@ try{
  report.testSummary={topLevelPasses:passes.filter(e=>!e.Test.includes('/')).length,passEventsIncludingSubtests:passes.length,failures:failures.length,names:passes.filter(e=>!e.Test.includes('/')).map(e=>e.Test)};
  if(report.testSummary.topLevelPasses<26||failures.length)throw Error('Overlay and original manual-resync suites did not exercise all expected checks');
  report.testsPassed=true;
+ const collectorTests=run(['test','-mod=vendor','-overlay',overlayPath,'-count=1','-timeout=60s','-json','-run','^(TestNativeTrust|TestNativeHomeSetupIsStableAndDisablePreservesUserSettings)','./cmd/codex-observed-launcher'],'collector-trust-tests');
+ const collectorEvents=collectorTests.split(/\r?\n/).flatMap(line=>{try{return[JSON.parse(line)];}catch{return[];}});
+ const collectorPasses=collectorEvents.filter(e=>e.Action==='pass'&&e.Test&&!e.Test.includes('/')).map(e=>e.Test);
+ if(collectorPasses.length!==4||collectorEvents.some(e=>e.Action==='fail'))throw Error('Collector trust checks failed');
+ report.collectorTrustTests={topLevelPasses:collectorPasses.length,names:collectorPasses,failures:0};
+ report.collectorRevision='0.4.9-r2-ca-bundle';
  run(['build','-mod=vendor','-overlay',overlayPath,'-buildvcs=false','-trimpath','-ldflags=-H=windowsgui','-o',binary,'.'],'backend-build',180000);
  report.artifacts.backend={path:relative(binary),...release.inspectPE(binary,2)};
  report.sha256=report.artifacts.backend.sha256;report.bytes=report.artifacts.backend.bytes;report.windowsSubsystem=2;
  const watcher=path.join(build,'CodexObservedLauncher.exe'),bridge=path.join(build,'CodexRoutingBridge.exe');
- run(['build','-mod=vendor','-buildvcs=false','-trimpath','-ldflags=-H=windowsgui','-o',watcher,'./cmd/codex-observed-launcher'],'watcher-build',180000);
+ run(['build','-mod=vendor','-overlay',overlayPath,'-buildvcs=false','-trimpath','-ldflags=-H=windowsgui','-o',watcher,'./cmd/codex-observed-launcher'],'watcher-build',180000);
  report.artifacts.watcher={path:relative(watcher),...release.inspectPE(watcher,2)};
  // The bridge is a stdio compatibility helper, so retain the console PE subsystem.
  run(['build','-mod=vendor','-buildvcs=false','-trimpath','-o',bridge,'./cmd/codex-routing-bridge'],'bridge-build',180000);

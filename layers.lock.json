@@ -13,7 +13,7 @@
     "background/engine/roll.js": "1b09b9ccda1c04b1a0db0a395f616b06dbce3ba5645d5d8c69eeb7b46a46a70d",
     "background/engine/switch_field.js": "c8c6f44875b2c13bc1b4c4ab96dcd722d9e24016f6840fa9bb258dd5c76023b8",
     "background/views.js": "0a597d32b19d67d1e96f4ba00d6ea5514e7e433369599ed4a73995059ca3c38c",
-    "engine/animator.js": "dcd17037ca3f976d65fadcecf3b0c1c65264402f9e84f006396f17f42b16f27f",
+    "engine/animator.js": "b03aaddd57e8f349b6f3ee906efce5da1eee7097075f0ba6be6537caa9371025",
     "engine/app.js": "fec55818b57885e9b929293b42b0cf4bfd386d19110cae4169945bb900e6ee2f",
     "engine/atlas.js": "14d1b52c8660025f6e22040bd1d42f3509034db0a3cbb2fffc7861c6d1364599",
     "engine/core.js": "cb14165a3ef5120ac2d7add3dcf22a412f93d27b57c90f8a67320534fe595be2",
@@ -25,12 +25,12 @@
     "engine/labels.js": "f306cf2df3c9e84f91a1f3074ccbccd23561d4e44ede3c55ce01a5e3522daf60",
     "engine/layers.js": "41c4dbf3450db5095af1fa9cdaced4748e4b67e72fb65d967af865125de19daa",
     "engine/particles.js": "99859d13ed455c10f3817ece3ec76128b02e2177eb0414aac56c867526f52b60",
-    "engine/presentation.js": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605",
+    "engine/presentation.js": "07b1f55a1001fe962b3125d04d0ab7374b3f6352c273d8f889d5915613e144dc",
     "engine/quota_motion.js": "2ef81c507f35b586fa2fc77c46afd668c9e6b2fb0ceb2dfa6e6508eff9c9deea",
     "engine/renderer.js": "c5bc00143977154bb48807b75bcc320b8ee29d2be8db07173e2500e1ee28b867",
     "engine/ribbons.js": "9680b9cb67cfa36c4b64d09c3f18a46112c8741c262704ff350084c6517d4359",
     "engine/ribbon_art.js": "5440fc21bd206dbe8ed3cbe210ffb78cf4f6e230ad7981fc51be028f6badcabd",
-    "engine/row_presentation.js": "bfc803d55c42dd53691edd0d5f5552c77ce0d50e26466be6ffa34c40f901ce3c",
+    "engine/row_presentation.js": "0e61f019cd4c77fa3e18c7e1ec5f434268b2c873b0ae847eb9ab3aa96ab80773",
     "engine/shaders/post.js": "1cf18ed42f6f5df01d6c717722d4a16400eff31ee102f437811108512b2979e4",
     "engine/shaders/scene_hud.js": "ed36a84bb9aeb9d66e9eab9db81272020daaeb11631a6bf2774d05d7a6c2d96f",
     "engine/shaders/scene_layers.js": "0f4d47ce3ecc1b608d62be49b01ecd134b7e794e39d6c7e72e7c3e1f97419cb1",
@@ -141,5 +141,37 @@
     "versionStrategy": "Overwrite the current fixed 0.4.9 six-layer project"
   },
   "previewHtmlSha256": "1fc219c53b27ee5c2f2e4bf4b21919aaf4245fce78a027c56df42099da4e955a",
-  "publicRelease": "v0.4.9-r1"
+  "publicRelease": "0.4.9-r2",
+  "hybridSpeed": {
+    "date": "2026-10-29",
+    "policy": "visible-text-cover-current-turn-token-baseline",
+    "currentStateOnly": true,
+    "tweenSeconds": 0.65,
+    "tokenMotionMaxFraction": 0.11,
+    "maxTokenTargetHz": 10,
+    "verification": "docs/VALIDATION.zh-CN.md",
+    "performance": "docs/VALIDATION.zh-CN.md"
+  },
+  "tokenLight": {
+    "date": "2026-10-29",
+    "bands": [
+      20,
+      50,
+      90
+    ],
+    "levels": [
+      0.22,
+      0.34,
+      0.48,
+      0.62
+    ],
+    "turnsPerSecond": [
+      0.34,
+      0.44,
+      0.54,
+      0.64
+    ],
+    "existingWritingEffectUnchanged": true,
+    "verification": "docs/VALIDATION.zh-CN.md"
+  }
 }

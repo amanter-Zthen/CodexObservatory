@@ -158,3 +158,7 @@ Release 的 `display-host.example.json` 默认停用。先将它复制为根目�
 采集会在内存解析受支持的请求／响应以提取元数据。显示的模型名称是请求与服务报告的标签，不是实际模型权重的独立认证。速度、颜色、时效和断线行为详见 [API 契约](API.zh-CN.md)。
 
 上述流程和相关测试已在开发环境验证，尚未在另一台机器完成首次安装复验。
+
+## r2 信任包与现有安装升级
+
+初始化生成的 ca.pem 同时包含原 observer CA 与 Windows 公共 TLS 根。保留 identity.json；仅替换启动器文件不会重载已经运行的 watcher。完整步骤和回退边界见 [TLS 信任包](TRUST.zh-CN.md)。

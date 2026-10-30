@@ -57,9 +57,11 @@ node .\tools\check-publication.cjs
 ```powershell
 node .\tools\package-release.cjs --check
 node .\tools\package-release.cjs
-Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-windows-x64.zip'
+Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-r2-windows-x64.zip'
 ```
 
 打包读取本次构建报告和实际文件哈希，输出 `dist/CodexObservatory/`；已有输出不会被覆盖。需要另一个干净输出时使用 `--out dist/NAME`。包内包含四个运行 EXE、当前视觉源、双语指南、图层预览和许可证，以及默认停用的显示配置示例。配置自己的实例见 [接入指南](INTEGRATION.zh-CN.md)。
 
 源码中的旧原生 README 和默认目录候选保留基线语义；公开接入使用你显式填写的 `roots` / `codex_home`。本仓库不包含生产状态、凭据、CA 身份或作者机器的部署记录。
+
+r2 的同一构建入口也投影采集器信任包修复，并执行 4 项定点检查；输出的 watcher 包含 Windows ROOT 合并逻辑。无需再手工替换一份不同来源的 watcher。实现及升级边界见 [TLS 信任包](TRUST.zh-CN.md)。

@@ -1,8 +1,19 @@
-# Public 0.4.9-r1 validation
+# Public 0.4.9-r2 validation
 
 [中文](VALIDATION.zh-CN.md) · [Home](../README.en.md)
 
 This revision rebuilds the C++ display host and validates the input-window fix and changed visual path in a separate public-source directory on the Windows development machine. The Go backend and native build retain the same inputs and artifacts. Prior validation is listed separately below rather than counted as rerun. Publication work did not restart running production applications or change their networking, backend, or watcher.
+
+## r2 targeted validation · 2026-10-31
+
+- Collector trust bundle: four top-level checks pass, including four Windows EKU subcases, repeated initialization, signing-identity preservation and failed-write recovery boundaries.
+- Hybrid speed: 11 checks pass; the original writing-number interpolation has zero comparison error and row churn retains bounded memory.
+- Normal-token light: 14 checks pass. Actual WebGL model-name and number pixels change with the effect, with zero new textures, GL errors or page errors.
+- Public build entry: the retained display overlay passes 26 top-level checks and 77 including subtests, plus the four collector checks above; retained native source files remain unchanged.
+- Independent Windows/Python ROOT enumeration produces the same 57 public TLS roots as the bundle that restored a real connection. This count belongs to the verification computer and is not hard-coded.
+- The new watcher loads at its next normal start. File installation and live activation are recorded separately. Public artifacts include no author-machine certificates, identities, configuration or raw logs.
+
+The r1 records below are retained historical validation. This revision did not rerun the full long stress, cross-process mouse or video-render suites.
 
 ## Revalidated for r1
 

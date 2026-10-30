@@ -1,0 +1,11 @@
+{
+  "releaseVersion": "0.4.9-r2",
+  "visualProjectVersion": "0.4.9",
+  "nativeSourceBaseline": "0.4.8-nacre",
+  "backendApiVersion": "0.4.8-nacre",
+  "collectorRevision": "0.4.9-r2-ca-bundle",
+  "desktopRevision": "0.4.9-shell.1",
+  "releaseDate": "2026-10-31",
+  "runtimeIdentity": "SHA-256 in build reports and archive manifest",
+  "activation": "Existing processes load updated code only at their next start"
+}

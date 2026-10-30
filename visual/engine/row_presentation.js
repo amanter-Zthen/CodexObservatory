@@ -28,6 +28,35 @@
   }
   step(now){return this.x=this.value(now);}
  }
+ // Current-turn display only. Visible writing covers the token baseline with
+ // the existing large text-speed number; neither value changes backend evidence.
+ class HybridRate{
+  constructor(seed=0){this.turn=null;this.model=null;this.anchor=0;this.sample=null;this.phase=seed*100;this.row=null;this.healthy=false;this.rate=0;this.source='none';this.show=false;}
+  accept(row,ready=true){
+   const healthy=ready&&row.health_valid!==false;
+   if(!healthy||this.turn!==row.turn_id||this.model!==row.model){this.anchor=0;this.sample=null;}
+   this.turn=row.turn_id;this.model=row.model;this.row=row;this.healthy=healthy;
+   // A completed response remains usable after the short speed_fresh window.
+   if(healthy&&row.response_id&&row.speed_valid&&Number.isFinite(row.tokens_per_second)&&row.tokens_per_second>0&&this.sample!==row.response_id){
+    this.anchor=row.tokens_per_second;this.sample=row.response_id;
+   }
+   return this.step(0);
+  }
+  step(dt,still=false){
+   const r=this.row;this.rate=0;this.source='none';this.show=false;
+   if(!r||!this.healthy||r.activity==='completed'||r.activity==='failed'||r.activity==='cancelled')return this;
+   let text=Number.isFinite(r.estimated_visible_tokens_per_second)?r.estimated_visible_tokens_per_second:0;
+   if(text<=0&&Number.isFinite(r.output_activity))text=r.output_activity*.4;
+   if(r.outputting&&text>0){this.rate=text;this.source='text';}
+   else if(this.anchor>0){
+    const moving=r.activity==='running'&&!still;
+    if(moving)this.phase=(this.phase+Math.max(0,Math.min(.1,dt)))%100;
+    const p=this.phase,wave=moving?.08*Math.sin(TAU*.37*p)+.03*Math.sin(TAU*.83*p+1.4):0;
+    this.rate=this.anchor*(1+wave);this.source='token';
+   }
+   this.show=this.rate>0;return this;
+  }
+ }
  class RowMotion{
   constructor(seed=0){
    this.wanted=false;this.open=0;this.phase='closed';this.elapsed=0;
@@ -89,5 +118,5 @@
    baseline:row.y+row.font*.36,guideY:row.y+row.font*.36+4.8,
    expandedRight:finalRight,groupLeft:modelX-P.orbExtent};
  }
- NS.RowMotion=RowMotion;NS.rowLayout=rowLayout;NS.rowTravel=travel;NS.RateTween=RateTween;
+ NS.RowMotion=RowMotion;NS.rowLayout=rowLayout;NS.rowTravel=travel;NS.RateTween=RateTween;NS.HybridRate=HybridRate;
 })(window.RA);

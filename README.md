@@ -4,7 +4,9 @@
 
 把监控做成桌面艺术，把路由状态亮在眼前。六层玻璃、流线、粒子与动态文字，把正在工作的 Codex 变成一座发光观测站——赏心悦目，也有据可看。
 
-[English — 内容逐项对应](README.en.md) · [下载 0.4.9-r1](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r1) · [4K / 60 fps 完整演示](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
+[English — 内容逐项对应](README.en.md) · [下载 0.4.9-r2](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r2) · [4K / 60 fps 完整演示](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
+
+**0.4.9-r2**：公共 TLS 根与采集 CA 一起保留，补齐混合速度和按档位流光。[版本记录](docs/CHANGELOG.zh-CN.md) · [证书修复与升级](docs/TRUST.zh-CN.md)。下方视频展示 r1 六层视觉基线。
 
 [![Codex Observatory 六层视觉演示](media/preview.gif)](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
 
@@ -25,7 +27,7 @@
 
 下载源码后，直接用支持 WebGL2 的浏览器打开 [`visual/index.html`](visual/index.html)。右侧控制区可以选择模型数量、状态颜色、输出、额度、镜头、画质，以及六层独显。这个预览使用合成数据，无需后端或 Node。
 
-使用 [Windows x64 Release](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r1) 时，解压后运行：
+使用 [Windows x64 Release](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r2) 时，解压后运行：
 
 ```powershell
 .\desktop\CodexObservatory.exe --preview

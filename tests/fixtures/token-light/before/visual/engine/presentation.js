@@ -1,0 +1,53 @@
+/* G02-BG10: presentation-only controls. Coordinates are panel DIP.
+ * The idle quota still rests at the centre; dock/ring sequencing is unchanged.
+ */
+(function(NS){
+ 'use strict';
+ NS.presentation=Object.freeze({
+  renderMargin:128,
+  quotaDockX:49,
+  quotaIdleSize:32,
+  quotaDockSize:26,
+  quotaRingScale:.80,
+  sessionX:164,
+  collapsedSessionX:184,
+  rowRightInset:28,
+  modelRateGap:12,
+  infoLeft:108,
+  infoRight:22,
+  orbOffset:11,
+  orbExtent:18,
+  rowExpandDuration:.60,
+  rowCollapseDuration:.50,
+  rowSettleBias:.28,
+  rowNameHold:.18,
+  outputStartDelay:.12,
+  outputPauseHold:.80,
+  rateRefresh:0,
+  rateTweenDuration:.65,
+  outputTextGlow:.52,
+  outputTextBandStrength:2.60,
+  outputTextHaloSpread:1.60,
+  outputTextChroma:1.16,
+  outputTextBrightness:1.25,
+  outputTextShimmer:.22,
+  outputTextFlowTurns:.55,
+  orbIdleTurns:.06,
+  orbOutputTurns:2.4,
+  orbRateTurns:1.2,
+  lampLightBase:.42,
+  lampBreathAmplitude:.07,
+  lampBreathPeriod:3.8,
+  lampOutputBoost:.12,
+  foregroundGlowGain:1.10,
+  foregroundGlowSaturation:1.05,
+  foregroundGlowCoverage:.05,
+  transitionGlowGather:.42,
+  transitionGlowEdgeFeather:120,
+  glassIdleZoom:1.08,
+  glassEnterAt:.12,
+  glassExitLead:.10,
+  focusClearBand:.44,
+  focusMaxRadius:7.4
+ });
+})(window.RA);

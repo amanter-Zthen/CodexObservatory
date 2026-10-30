@@ -57,9 +57,11 @@ node .\tools\check-publication.cjs
 ```powershell
 node .\tools\package-release.cjs --check
 node .\tools\package-release.cjs
-Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-windows-x64.zip'
+Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-r2-windows-x64.zip'
 ```
 
 Packaging reads the current build reports and actual file hashes, producing `dist/CodexObservatory/`. Existing output is not overwritten. Use `--out dist/NAME` for a different empty destination. The package includes four runtime executables, current visual source, bilingual guides, layer previews and licenses, and a disabled display-configuration example. See [integration](INTEGRATION.en.md) to configure your instance.
 
 The old native README and default directory candidates retain baseline semantics. Public integration uses explicitly configured `roots` / `codex_home`. This repository contains no production state, credentials, CA identities, or deployment records from the author's machine.
+
+The same build entry projects the r2 collector trust fix and runs four targeted checks. Its watcher includes Windows ROOT merging; no separately sourced watcher needs to be substituted manually. See [TLS trust](TRUST.en.md) for the implementation and upgrade boundary.

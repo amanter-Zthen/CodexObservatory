@@ -1,4 +1,4 @@
-# 0.4.9-r1 six-layer project
+# 0.4.9-r2 six-layer project
 
 [中文](LAYERS.zh-CN.md) · [Home](../README.en.md)
 
@@ -52,3 +52,7 @@ npm run test:glass
 The runtime uses a shared WebGL2 context, bounded texture/atlas resources, incremental glyph preparation, and one pending draw. Canvas fallback preserves information display but does not promise the full WebGL artwork. Static mode continues state updates while stopping decorative motion.
 
 At 216 DPI and 100% / 125% zoom, r1 passed real cross-process checks for outer-margin left/right clicks, wheel input, and rounded-corner pass-through, plus in-panel dragging, menus, and hide/reopen. Physical multi-monitor crossing and sustained use still require validation in the corresponding environment. See [validation](VALIDATION.en.md) for full results and [demo production](MEDIA.en.md) for the 37-second timeline.
+
+## r2 normal-token flow light
+
+Latest token samples use <20, 20–<50, 50–<90 and ≥90 tok/s bands, with .22/.34/.48/.62 envelopes and .34/.44/.54/.64 turns per second. Model names, numbers and /s share existing text channels. Actual writing keeps its full effect, tool waits release added light and static mode freezes motion. Sampled anchors select bands rather than decorative number fluctuations.

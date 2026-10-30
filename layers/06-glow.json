@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "visual/engine/presentation.js",
-      "sha256": "3a8c06e3b5a32ef4715e695babaa0c2278547e3b2cc580369b95965304ca6605"
+      "sha256": "07b1f55a1001fe962b3125d04d0ab7374b3f6352c273d8f889d5915613e144dc"
     },
     {
       "path": "visual/engine/renderer.js",

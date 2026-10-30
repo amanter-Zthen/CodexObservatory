@@ -1,6 +1,6 @@
 {
   "name": "codex-observatory",
-  "version": "0.4.9",
+  "version": "0.4.9-r2",
   "private": true,
   "description": "Six-layer Windows floating observatory for Codex routing state",
   "scripts": {
@@ -12,7 +12,9 @@
     "build:backend": "node deployment/build-overlay.cjs",
     "package": "node tools/package-release.cjs",
     "render:demo": "node tools/render-public-demo.cjs",
-    "test:glass": "node tests/verify-glass-state-driver.cjs"
+    "test:glass": "node tests/verify-glass-state-driver.cjs",
+    "test:hybrid": "node tests/verify-hybrid-speed.cjs",
+    "test:token-light": "node tests/verify-token-light.cjs"
   },
   "engines": {
     "node": ">=20"

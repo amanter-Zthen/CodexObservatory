@@ -47,7 +47,8 @@ function main() {
     throw new Error('A successful current desktop build with the pinned WebView2 SDK is required');
   }
   const overlayNames = ['display_host_windows.go', 'display_host_windows_test.go', 'display_controls_windows.go', 'display_controls_windows_test.go', 'route_pulse_windows.go', 'route_pulse_windows_test.go', 'startup_visibility_windows_test.go'];
-  requireSourceSet(backend.sourceHashes, ['deployment/build-overlay.cjs', 'deployment/native-source-manifest.json', 'tools/release-common.cjs', ...overlayNames.map(file => 'deployment/overlay/' + file)], 'Backend build sources');
+  requireSourceSet(backend.sourceHashes, ['deployment/build-overlay.cjs', 'deployment/native-source-manifest.json', 'tools/release-common.cjs', ...overlayNames.map(file => 'deployment/overlay/' + file), 'deployment/collector/native_trust_windows.go', 'deployment/collector/native_trust_windows_test.go'], 'Backend build sources');
+  if (backend.collectorRevision !== '0.4.9-r2-ca-bundle' || backend.collectorTrustTests?.topLevelPasses !== 4 || backend.collectorTrustTests.failures !== 0) throw new Error('The current collector trust-bundle build is required');
   requireSourceSet(desktop.sourceHashes, ['desktop/host.cpp', 'desktop/composition_host.h', 'desktop/input_region.h', 'desktop/legacy_menu.h', 'desktop/vendor/json.hpp', 'tools/build-desktop.ps1'], 'Desktop build sources');
   const artifacts = {
     backend: checkArtifact(backend.artifacts && backend.artifacts.backend, 'deployment/build/CodexObservatory.exe', 2),
@@ -73,10 +74,10 @@ function main() {
   add('deployment/display-host.schema.json');
   add('interfaces/snapshot-fields.json');
   for (const file of ['docs/图层定稿.md', 'docs/玻璃参数.md']) add(file);
-  for (const guide of ['BUILD', 'INTEGRATION', 'API', 'LAYERS', 'MEDIA', 'VALIDATION']) {
+  for (const guide of ['BUILD', 'INTEGRATION', 'API', 'LAYERS', 'MEDIA', 'VALIDATION', 'TRUST', 'CHANGELOG']) {
     for (const language of ['zh-CN', 'en']) add('docs/' + guide + '.' + language + '.md');
   }
-  for (const file of ['README.md', 'README.en.md', 'THIRD_PARTY_NOTICES.md']) add(file);
+  for (const file of ['README.md', 'README.en.md', 'VERSION.json', 'THIRD_PARTY_NOTICES.md']) add(file);
   const layerDescriptions = release.walk(root, 'layers').filter(file => /^layers\/[^/]+\.json$/.test(file));
   if (layerDescriptions.length !== visual.lock.layers.length) throw new Error('Public layer descriptions must cover all six layers');
   for (const file of layerDescriptions) add(file);

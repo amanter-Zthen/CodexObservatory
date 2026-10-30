@@ -4,7 +4,9 @@
 
 Make monitoring desktop art, and put routing state in plain sight. Six layers of glass, ribbons, particles, and animated text turn a working Codex session into a luminous observatory—beautiful to watch, with evidence to read.
 
-[中文 — matching content](README.md) · [Download 0.4.9-r1](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r1) · [Full 4K / 60 fps demo](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
+[中文 — matching content](README.md) · [Download 0.4.9-r2](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r2) · [Full 4K / 60 fps demo](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
+
+**0.4.9-r2** preserves public TLS roots alongside the capture CA and adds hybrid speed and banded flow light. [Version history](docs/CHANGELOG.en.md) · [Trust fix and upgrade](docs/TRUST.en.md). The video below shows the r1 six-layer visual baseline.
 
 [![Codex Observatory six-layer visual demo](media/preview.gif)](https://github.com/amanter-Zthen/CodexObservatory/releases/download/v0.4.9-r1/CodexObservatory-0.4.9-4K60.mp4)
 
@@ -25,7 +27,7 @@ Model-label comparison provides routing clues; it cannot independently authentic
 
 After downloading the source, open [`visual/index.html`](visual/index.html) in a WebGL2-capable browser. The controls select model count, status colors, output, quota, camera, quality, and each layer in isolation. This synthetic preview needs neither a backend nor Node.
 
-For the [Windows x64 release](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r1), extract it and run:
+For the [Windows x64 release](https://github.com/amanter-Zthen/CodexObservatory/releases/tag/v0.4.9-r2), extract it and run:
 
 ```powershell
 .\desktop\CodexObservatory.exe --preview

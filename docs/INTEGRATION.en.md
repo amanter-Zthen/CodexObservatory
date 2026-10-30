@@ -158,3 +158,7 @@ The new display host retains only current snapshots, latest animation targets, a
 Capture parses supported requests/responses in memory to extract metadata. Displayed model names are requested and service-reported labels, not independent authentication of model weights. See the [API contract](API.en.md) for rate, color, freshness, and disconnection behavior.
 
 These procedures and related tests have been validated in the development environment; first-time installation has not yet been revalidated on a second machine.
+
+## r2 trust bundle and existing installations
+
+The generated ca.pem contains both the original observer CA and Windows public TLS roots. Preserve identity.json; replacing the launcher file does not reload an existing watcher. See [TLS trust](TRUST.en.md) for the complete upgrade and rollback boundary.
