@@ -17,7 +17,8 @@ const fileHash=p=>hash(fs.readFileSync(p));
 function treeHashes(){return release.hashFiles(project,release.walk(project,'native'));}
 const overlayNames=['display_host_windows.go','display_host_windows_test.go','display_controls_windows.go','display_controls_windows_test.go','route_pulse_windows.go','route_pulse_windows_test.go','startup_visibility_windows_test.go'];
 const collectorNames=['native_trust_windows.go','native_trust_windows_test.go'];
-const sourceInputs=['deployment/build-overlay.cjs','deployment/native-source-manifest.json','tools/release-common.cjs',...overlayNames.map(file=>'deployment/overlay/'+file),...collectorNames.map(file=>'deployment/collector/'+file)];
+const identityNames=['rollout_identity_windows.go','rollout_identity_windows_test.go','rollout_identity_migration_windows_test.go','rollout_identity_observed_windows_test.go'];
+const sourceInputs=['deployment/build-overlay.cjs','deployment/project-rollout-identity.cjs','deployment/native-source-manifest.json','tools/release-common.cjs',...overlayNames.map(file=>'deployment/overlay/'+file),...identityNames.map(file=>'deployment/overlay/'+file),...collectorNames.map(file=>'deployment/collector/'+file)];
 const relative=p=>path.relative(project,p).replaceAll('\\','/');
 const report={formatVersion:1,kind:'codex-observatory-backend-build',started:new Date().toISOString(),binary:relative(binary),nativeBaseline:'0.4.8-nacre',
  parameters:{goSelection:process.env.OBSERVATORY_GO?'OBSERVATORY_GO':'PATH',cacheSelection:cache?'OBSERVATORY_GO_CACHE':'Go default or inherited GOCACHE',goos:'windows',goarch:'amd64',moduleMode:'vendor',toolchain:'local',cgo:false,productionMutation:'NONE'},
@@ -113,18 +114,20 @@ try{
  for(const file of collectorNames){
   overlay.Replace[path.join(native,'cmd','codex-observed-launcher','zz_'+file)]=path.join(__dirname,'collector',file);
  }
+ require('./project-rollout-identity.cjs')({native,generated,overlay});
  const overlayPath=path.join(build,'overlay.json');
  fs.writeFileSync(overlayPath,JSON.stringify(overlay,null,2));
  report.overlay=relative(overlayPath);
  report.overlayFiles=Object.fromEntries(Object.entries(overlay.Replace).map(([logical,physical])=>[relative(logical),{source:relative(physical),sha256:fileHash(physical)}]));
  report.overlayHash=hash(JSON.stringify(report.overlayFiles));
- const args=['test','-mod=vendor','-overlay',overlayPath,'-count=1','-timeout=60s','-json','-run','^(TestDisplayOverlay|TestRouteSync)','.'];
+ const args=['test','-mod=vendor','-overlay',overlayPath,'-count=1','-timeout=90s','-json','.', './internal/floatui'];
  const tests=run(args,'display-overlay-tests');
  const events=tests.split(/\r?\n/).flatMap(line=>{try{return[JSON.parse(line)];}catch{return[];}});
  const passes=events.filter(e=>e.Action==='pass'&&e.Test),failures=events.filter(e=>e.Action==='fail');
  report.testSummary={topLevelPasses:passes.filter(e=>!e.Test.includes('/')).length,passEventsIncludingSubtests:passes.length,failures:failures.length,names:passes.filter(e=>!e.Test.includes('/')).map(e=>e.Test)};
  if(report.testSummary.topLevelPasses<26||failures.length)throw Error('Overlay and original manual-resync suites did not exercise all expected checks');
  report.testsPassed=true;
+ report.backendRevision='0.4.9-r3-subagent-lifecycle';
  const collectorTests=run(['test','-mod=vendor','-overlay',overlayPath,'-count=1','-timeout=60s','-json','-run','^(TestNativeTrust|TestNativeHomeSetupIsStableAndDisablePreservesUserSettings)','./cmd/codex-observed-launcher'],'collector-trust-tests');
  const collectorEvents=collectorTests.split(/\r?\n/).flatMap(line=>{try{return[JSON.parse(line)];}catch{return[];}});
  const collectorPasses=collectorEvents.filter(e=>e.Action==='pass'&&e.Test&&!e.Test.includes('/')).map(e=>e.Test);

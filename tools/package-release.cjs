@@ -47,7 +47,9 @@ function main() {
     throw new Error('A successful current desktop build with the pinned WebView2 SDK is required');
   }
   const overlayNames = ['display_host_windows.go', 'display_host_windows_test.go', 'display_controls_windows.go', 'display_controls_windows_test.go', 'route_pulse_windows.go', 'route_pulse_windows_test.go', 'startup_visibility_windows_test.go'];
-  requireSourceSet(backend.sourceHashes, ['deployment/build-overlay.cjs', 'deployment/native-source-manifest.json', 'tools/release-common.cjs', ...overlayNames.map(file => 'deployment/overlay/' + file), 'deployment/collector/native_trust_windows.go', 'deployment/collector/native_trust_windows_test.go'], 'Backend build sources');
+  const identityNames = ['rollout_identity_windows.go', 'rollout_identity_windows_test.go', 'rollout_identity_migration_windows_test.go', 'rollout_identity_observed_windows_test.go'];
+  requireSourceSet(backend.sourceHashes, ['deployment/build-overlay.cjs', 'deployment/project-rollout-identity.cjs', 'deployment/native-source-manifest.json', 'tools/release-common.cjs', ...overlayNames.map(file => 'deployment/overlay/' + file), ...identityNames.map(file => 'deployment/overlay/' + file), 'deployment/collector/native_trust_windows.go', 'deployment/collector/native_trust_windows_test.go'], 'Backend build sources');
+  if (backend.backendRevision !== '0.4.9-r3-subagent-lifecycle' || !['TestRolloutIdentityCopiedHeaderKeepsChild', 'TestRolloutIdentityCompletedChildLeavesParentRunning', 'TestRolloutIdentityMigrationRunsBeforeOldEventsSeed'].every(name => backend.testSummary.names.includes(name))) throw new Error('The tested subagent lifecycle repair is required');
   if (backend.collectorRevision !== '0.4.9-r2-ca-bundle' || backend.collectorTrustTests?.topLevelPasses !== 4 || backend.collectorTrustTests.failures !== 0) throw new Error('The current collector trust-bundle build is required');
   requireSourceSet(desktop.sourceHashes, ['desktop/host.cpp', 'desktop/composition_host.h', 'desktop/input_region.h', 'desktop/legacy_menu.h', 'desktop/vendor/json.hpp', 'tools/build-desktop.ps1'], 'Desktop build sources');
   const artifacts = {

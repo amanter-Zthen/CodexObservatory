@@ -1,11 +1,12 @@
 {
-  "releaseVersion": "0.4.9-r2",
+  "releaseVersion": "0.4.9-r3",
   "visualProjectVersion": "0.4.9",
   "nativeSourceBaseline": "0.4.8-nacre",
   "backendApiVersion": "0.4.8-nacre",
   "collectorRevision": "0.4.9-r2-ca-bundle",
   "desktopRevision": "0.4.9-shell.1",
-  "releaseDate": "2026-10-31",
+  "releaseDate": "2026-11-13",
   "runtimeIdentity": "SHA-256 in build reports and archive manifest",
-  "activation": "Existing processes load updated code only at their next start"
+  "activation": "Existing processes load updated code only at their next start",
+  "backendRevision": "0.4.9-r3-subagent-lifecycle"
 }

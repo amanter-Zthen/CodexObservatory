@@ -26,7 +26,7 @@ $env:OBSERVATORY_GO = 'C:\Tools\Go\bin\go.exe'
 node .\deployment\build-overlay.cjs
 ```
 
-脚本核对 `deployment/native-source-manifest.json`，将 0.4.9 修改投影到 Go overlay，在隔离夹具中验证，再生成后端、watcher 和兼容桥。`native/` 原文件在构建前后保持一致。依赖使用 vendor，编译时关闭模块联网下载。`OBSERVATORY_GO_CACHE` 可选择构建缓存位置；省略时使用 Go 的正常缓存。
+脚本核对 `deployment/native-source-manifest.json`，将 0.4.9 修改和 r3 子代理生命周期修复投影到 Go overlay，在隔离夹具中验证，再生成后端、watcher 和兼容桥。`native/` 原文件在构建前后保持一致。依赖使用 vendor，编译时关闭模块联网下载。`OBSERVATORY_GO_CACHE` 可选择构建缓存位置；省略时使用 Go 的正常缓存。
 
 输出为 `deployment/build/CodexObservatory.exe`、`CodexObservedLauncher.exe`、`CodexRoutingBridge.exe`，报告为 `deployment/build-report.json`。单独 `go build native` 不包含新显示接口；它用于保留的旧基线。
 
@@ -52,12 +52,14 @@ node .\tools\check-publication.cjs
 
 `OBSERVATORY_CHROME` 可指向浏览器 EXE，`OBSERVATORY_PLAYWRIGHT` 可指向已有 Playwright 包。长压力检查另用 `npm run test:stress`。这些测试使用构造状态和隔离本地服务；具体覆盖与限制见 [验证记录](VALIDATION.zh-CN.md)。结果写到忽略的 `verification/` 或 `tests/` 输出文件。
 
+覆盖层构建默认跳过 `TestRolloutIdentityObservedReplay` 真实日志回放。可选回放时，将 `OBSERVATORY_ROLLOUT_PROBE_LIST` 指向本机 JSON 字符串数组文件，其中列出已有且已完成的 rollout 绝对路径；可用 `OBSERVATORY_ROLLOUT_PROBE_OUTPUT` 指定本机 JSON 输出，包含文件名、会话身份和生命周期摘要，不含消息或工具正文。公开仓库不包含私人日志或路径清单。
+
 ## 5. 生成运行包
 
 ```powershell
 node .\tools\package-release.cjs --check
 node .\tools\package-release.cjs
-Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-r2-windows-x64.zip'
+Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-r3-windows-x64.zip'
 ```
 
 打包读取本次构建报告和实际文件哈希，输出 `dist/CodexObservatory/`；已有输出不会被覆盖。需要另一个干净输出时使用 `--out dist/NAME`。包内包含四个运行 EXE、当前视觉源、双语指南、图层预览和许可证，以及默认停用的显示配置示例。配置自己的实例见 [接入指南](INTEGRATION.zh-CN.md)。

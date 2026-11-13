@@ -141,7 +141,7 @@
     "versionStrategy": "Overwrite the current fixed 0.4.9 six-layer project"
   },
   "previewHtmlSha256": "1fc219c53b27ee5c2f2e4bf4b21919aaf4245fce78a027c56df42099da4e955a",
-  "publicRelease": "0.4.9-r2",
+  "publicRelease": "0.4.9-r3",
   "hybridSpeed": {
     "date": "2026-10-29",
     "policy": "visible-text-cover-current-turn-token-baseline",

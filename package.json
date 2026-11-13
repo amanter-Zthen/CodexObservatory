@@ -1,6 +1,6 @@
 {
   "name": "codex-observatory",
-  "version": "0.4.9-r2",
+  "version": "0.4.9-r3",
   "private": true,
   "description": "Six-layer Windows floating observatory for Codex routing state",
   "scripts": {

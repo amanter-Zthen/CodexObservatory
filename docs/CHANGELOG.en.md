@@ -2,6 +2,15 @@
 
 [中文](CHANGELOG.zh-CN.md)
 
+## 0.4.9-r3 · 2026-11-13
+
+- Fix subagent log ownership: retain the session identity first established for a file, so inherited parent metadata no longer overwrites it and file completion events and network responses belong to the same subagent.
+- At startup, compare old caches with the source log's first identity and event ownership; reparse only misattributed caches within the existing 4 MiB incremental chunks and scan budget.
+- Preserve the distinction between a single completed response and a completed turn, along with existing semantics for tool waits, later turns, and late frames; add no continuous polling or history.
+- Build the fix through the Go overlay while retaining the frozen `native/` originals; the six-layer visuals, flow-light and speed algorithms, display executable, capture watcher, and network protocol remain unchanged.
+
+The release identifier is 0.4.9-r3, the six-layer project remains 0.4.9, the display host is shell.1, and the native source and compatible API baseline remain 0.4.8-nacre. See [validation](VALIDATION.en.md) for local targeted results and public rebuild coverage; the demo continues to show the r1 visual baseline.
+
 ## 0.4.9-r2 · 2026-10-31
 
 - Fix the capture launcher's generated TLS trust bundle: preserve both the original observer CA and Windows public TLS roots, preventing the next initialization from breaking public-service certificate verification again.

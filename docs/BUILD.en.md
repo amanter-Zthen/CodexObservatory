@@ -26,7 +26,7 @@ $env:OBSERVATORY_GO = 'C:\Tools\Go\bin\go.exe'
 node .\deployment\build-overlay.cjs
 ```
 
-The script checks `deployment/native-source-manifest.json`, projects the 0.4.9 changes through a Go overlay, runs isolated fixtures, and builds the backend, watcher, and compatibility bridge. Original `native/` files remain unchanged before and after the build. Dependencies use vendor, with module downloads disabled during compilation. `OBSERVATORY_GO_CACHE` can select the build cache; otherwise Go uses its normal cache.
+The script checks `deployment/native-source-manifest.json`, projects the 0.4.9 changes and r3 subagent lifecycle fix through a Go overlay, runs isolated fixtures, and builds the backend, watcher, and compatibility bridge. Original `native/` files remain unchanged before and after the build. Dependencies use vendor, with module downloads disabled during compilation. `OBSERVATORY_GO_CACHE` can select the build cache; otherwise Go uses its normal cache.
 
 Outputs are `deployment/build/CodexObservatory.exe`, `CodexObservedLauncher.exe`, and `CodexRoutingBridge.exe`, with `deployment/build-report.json`. Building native alone does not include the new display interfaces; it represents the preserved old baseline.
 
@@ -52,12 +52,14 @@ node .\tools\check-publication.cjs
 
 `OBSERVATORY_CHROME` can point to a browser executable, and `OBSERVATORY_PLAYWRIGHT` to an existing Playwright package. Use `npm run test:stress` for the longer stress check. Tests use constructed state and isolated local services; see [validation](VALIDATION.en.md) for coverage and limits. Results are written to ignored `verification/` or `tests/` output files.
 
+The overlay build skips the `TestRolloutIdentityObservedReplay` real-log replay by default. To opt in, set `OBSERVATORY_ROLLOUT_PROBE_LIST` to a local JSON file containing an array of absolute paths to existing, completed rollouts, and optionally set `OBSERVATORY_ROLLOUT_PROBE_OUTPUT` to a local JSON output containing filenames, session identities, and lifecycle summaries, without message or tool content. The public repository includes neither private logs nor a path list.
+
 ## 5. Assemble a runtime package
 
 ```powershell
 node .\tools\package-release.cjs --check
 node .\tools\package-release.cjs
-Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-r2-windows-x64.zip'
+Compress-Archive -LiteralPath '.\dist\CodexObservatory' -DestinationPath '.\dist\CodexObservatory-0.4.9-r3-windows-x64.zip'
 ```
 
 Packaging reads the current build reports and actual file hashes, producing `dist/CodexObservatory/`. Existing output is not overwritten. Use `--out dist/NAME` for a different empty destination. The package includes four runtime executables, current visual source, bilingual guides, layer previews and licenses, and a disabled display-configuration example. See [integration](INTEGRATION.en.md) to configure your instance.
